@@ -8,10 +8,22 @@ USE sms_food_service;
 CREATE TABLE user_data(
 	uid			INT				PRIMARY KEY NOT NULL AUTO_INCREMENT,
 	username	VARCHAR(255)	UNIQUE NOT NULL,
-	password	BINARY(32)		NOT NULL, -- FIXME: 32 bytes is placeholder; need to decide on crypt function and salt length
+	password	BINARY(40)		NOT NULL, -- SHA256 + 64-bit salt
 	email		VARCHAR(255)	NOT NULL,
 	address		VARCHAR(255)	NOT NULL,
 	zip			VARCHAR(9)		NOT NULL -- Can store ZIP+4 without dash
+);
+
+CREATE TABLE session_data(
+	sid		INT			PRIMARY KEY NOT NULL AUTO_INCREMENT,
+	uid		INT			NOT NULL,
+	created	VARCHAR(31)	NOT NULL,
+	expires	DATETIME	NOT NULL,
+	
+	FOREIGN KEY(uid)
+		REFERENCES user_data(uid)
+		ON DELETE CASCADE
+		ON UPDATE CASCADE
 );
 
 CREATE TABLE business(
@@ -33,6 +45,7 @@ CREATE TABLE client(
 	first_name	VARCHAR(255)	NOT NULL,
 	last_name	VARCHAR(255)	NOT NULL,
 	cell_phone	CHAR(10)		NOT NULL, -- Stores 10 digits only
+	paying		BOOLEAN			NOT NULL,
 	
 	FOREIGN KEY (uid)
 		REFERENCES user_data(uid)
@@ -86,16 +99,20 @@ CREATE TABLE notice(
 */
 
 -- Create a business
-INSERT INTO user_data VALUES(DEFAULT, 'testbusy', '12345678901234567890123456789012',
+-- password is 'dontsteal'
+INSERT INTO user_data VALUES(DEFAULT, 'testbusy',
+	UNHEX('3EB8214255DF787DE5481477BABE2C553C42278FD177043C10A250D398BE22C9F9A9D00A99A37558'),
 	'busy@testbusy.com', '123 Try Av.', '12345');
 
 INSERT INTO business VALUES(DEFAULT, 1, 'Test Busy', '(123)555-5555x1234', NULL);
 
 -- Create a client
-INSERT INTO user_data VALUES(DEFAULT, 'client_test', 'ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEF',
+-- password is 'pa$$word'
+INSERT INTO user_data VALUES(DEFAULT, 'client_test',
+	UNHEX('963B974433D487F6DF15426F4A86C811A1D968FD6D781B3A7B9CF854F11559A97B17E720EA7308C1'),
 	'clienttest@gmail.com', '321 Test St.', '987654321');
 
-INSERT INTO client VALUES(DEFAULT, 2, 'Client', 'Test', '9875551234');
+INSERT INTO client VALUES(DEFAULT, 2, 'Client', 'Test', '9875551234', true);
 
 -- Create a package
 INSERT INTO package VALUES(DEFAULT, 1, NULL, 'Potatoes', 'Some potatoes.', 'Lots', 123.99,
