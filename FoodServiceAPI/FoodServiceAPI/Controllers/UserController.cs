@@ -96,7 +96,7 @@ namespace FoodServiceAPI.Controllers
         [Route("register")]
         [HttpPost]
         [AllowAnonymous]
-        public async Task<string> Register([FromBody]UserRegistration reg)
+        public async Task<JsonResult> Register([FromBody]UserRegistration reg)
         {
             // FIXME: validate
             UserData user = new UserData
@@ -110,7 +110,7 @@ namespace FoodServiceAPI.Controllers
 
             await dbContext.Users.AddAsync(user);
 
-            if(reg.user_type.ToLower() == "client")
+            if (reg.user_type.ToLower() == "client")
             {
                 Client client = new Client
                 {
@@ -123,7 +123,7 @@ namespace FoodServiceAPI.Controllers
 
                 await dbContext.Clients.AddAsync(client);
             }
-            else if(reg.user_type.ToLower() == "business")
+            else if (reg.user_type.ToLower() == "business")
             {
                 Business business = new Business
                 {
@@ -136,17 +136,21 @@ namespace FoodServiceAPI.Controllers
                 await dbContext.Businesses.AddAsync(business);
             }
             else
-                return "INVALID_USER_TYPE"; // FIXME: Standard acknowledge
+            {
+                Acknowledgement<String> invalid_user_ack = new Acknowledgement<string>("INVALID_USER_TYPE", "User type must be specified as business or client", "N/A");
+                return Json(invalid_user_ack); 
+            }
 
             await dbContext.SaveChangesAsync();
 
-            return "OK"; // FIXME: Standard acknowledge
+            Acknowledgement<String> ack = new Acknowledgement<string>("OK", "Successfully created new user", "N/A");
+            return Json(ack); 
         }
 
         [Route("login")]
         [HttpPost]
         [Authorize("UserPass")]
-        public async Task<string> Login()
+        public async Task<JsonResult> Login()
         {
             // Create session
             SessionData session = new SessionData
@@ -177,19 +181,21 @@ namespace FoodServiceAPI.Controllers
                 signingCredentials: credentials
             );
 
-            return new JwtSecurityTokenHandler().WriteToken(token); // FIXME: Standard acknowledge
+            Acknowledgement<String> ack = new Acknowledgement<string>("OK", "Token succesfully created", new JwtSecurityTokenHandler().WriteToken(token));
+            return Json(ack);
         }
 
         [Route("logout")]
         [HttpPost]
         [Authorize("Session")]
-        public async Task<string> Logout()
+        public async Task<JsonResult> Logout()
         {
             SessionData session = await dbContext.Sessions.FindAsync(Convert.ToInt32(User.FindFirstValue("sid")));
             dbContext.Sessions.Remove(session);
             await dbContext.SaveChangesAsync();
 
-            return "OK"; // FIXME: Standard acknowledge
+            Acknowledgement<String> ack = new Acknowledgement<string>("OK", "User logout was a success", "N/A");
+            return Json(ack);
         }
 
         [Route("getinfo")]
@@ -200,26 +206,36 @@ namespace FoodServiceAPI.Controllers
             int uid = Convert.ToInt32(User.FindFirstValue("uid"));
             UserData user = await dbContext.Users.Include(u => u.Client).Include(u => u.Business).FirstOrDefaultAsync(u => u.uid == uid);
 
-            // FIXME: Standard acknowledge
+            
             if (user.Client != null)
-                return Json(new ClientInfo(user.Client));
+            {
+                Acknowledgement<ClientInfo> ack = new Acknowledgement<ClientInfo>("OK", "Request for user info success,", new ClientInfo(user.Client));
+                return Json(ack);
+            }
             else if (user.Business != null)
-                return Json(new BusinessInfo(user.Business));
+            {
+                Acknowledgement<BusinessInfo> ack = new Acknowledgement<BusinessInfo>("OK", "Request for business info success.", new BusinessInfo(user.Business));
+                return Json(ack);
+            }
             else
-                return Json("OTHER");
+            {
+                Acknowledgement<String> ack = new Acknowledgement<string>("OTHER", "Undetermined error.", "N/A");
+                return Json(ack);
+            }
         }
 
         [Route("logoutall")]
         [HttpPost]
         [Authorize("UserPass")]
-        public async Task<string> LogoutAllSessions()
+        public async Task<JsonResult> LogoutAllSessions()
         {
             int uid = Convert.ToInt32(User.FindFirstValue("uid"));
             SessionData[] sessions = await dbContext.Sessions.Where(s => s.uid == uid).ToArrayAsync();
             dbContext.Sessions.RemoveRange(sessions);
             await dbContext.SaveChangesAsync();
 
-            return "OK"; // FIXME: Standard acknowledge
+            Acknowledgement<String> ack = new Acknowledgement<string>("OK", "Successfully logged out of all sessions.", "N/A");
+            return Json(ack);
         }
 
         [Route("setinfo")]
