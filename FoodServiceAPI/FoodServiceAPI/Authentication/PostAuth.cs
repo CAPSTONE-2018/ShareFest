@@ -49,7 +49,7 @@ namespace FoodServiceAPI.Authentication
 
         protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
         {
-            // Request must be POST containg JSON
+            // Request must be POST containing JSON
             if(Request.Method != "POST" || Request.ContentType != "application/json")
                 return AuthenticateResult.NoResult();
 

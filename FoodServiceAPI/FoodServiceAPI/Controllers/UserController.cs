@@ -88,6 +88,11 @@ namespace FoodServiceAPI.Controllers
             }
         }
 
+        public class LoginReturn
+        {
+            public string session_token { get; set; }
+        }
+
         public UserController(FoodContext dbContext)
         {
             this.dbContext = dbContext;
@@ -137,13 +142,13 @@ namespace FoodServiceAPI.Controllers
             }
             else
             {
-                Acknowledgement<String> invalid_user_ack = new Acknowledgement<string>("INVALID_USER_TYPE", "User type must be specified as business or client", "N/A");
+                Acknowledgement<object> invalid_user_ack = new Acknowledgement<object>("INVALID_USER_TYPE", "User type must be specified as business or client", null);
                 return Json(invalid_user_ack); 
             }
 
             await dbContext.SaveChangesAsync();
 
-            Acknowledgement<String> ack = new Acknowledgement<string>("OK", "Successfully created new user", "N/A");
+            Acknowledgement<object> ack = new Acknowledgement<object>("OK", "Successfully created new user", null);
             return Json(ack); 
         }
 
@@ -181,7 +186,12 @@ namespace FoodServiceAPI.Controllers
                 signingCredentials: credentials
             );
 
-            Acknowledgement<String> ack = new Acknowledgement<string>("OK", "Token succesfully created", new JwtSecurityTokenHandler().WriteToken(token));
+            LoginReturn ret = new LoginReturn
+            {
+                session_token = new JwtSecurityTokenHandler().WriteToken(token)
+            };
+
+            Acknowledgement<LoginReturn> ack = new Acknowledgement<LoginReturn>("OK", "Token succesfully created", ret);
             return Json(ack);
         }
 
@@ -194,7 +204,7 @@ namespace FoodServiceAPI.Controllers
             dbContext.Sessions.Remove(session);
             await dbContext.SaveChangesAsync();
 
-            Acknowledgement<String> ack = new Acknowledgement<string>("OK", "User logout was a success", "N/A");
+            Acknowledgement<object> ack = new Acknowledgement<object>("OK", "User logout was a success", null);
             return Json(ack);
         }
 
@@ -219,7 +229,7 @@ namespace FoodServiceAPI.Controllers
             }
             else
             {
-                Acknowledgement<String> ack = new Acknowledgement<string>("OTHER", "Undetermined error.", "N/A");
+                Acknowledgement<object> ack = new Acknowledgement<object>("OTHER", "Function does not support this user type", null);
                 return Json(ack);
             }
         }
@@ -234,7 +244,7 @@ namespace FoodServiceAPI.Controllers
             dbContext.Sessions.RemoveRange(sessions);
             await dbContext.SaveChangesAsync();
 
-            Acknowledgement<String> ack = new Acknowledgement<string>("OK", "Successfully logged out of all sessions.", "N/A");
+            Acknowledgement<object> ack = new Acknowledgement<object>("OK", "Successfully logged out of all sessions.", null);
             return Json(ack);
         }
 
