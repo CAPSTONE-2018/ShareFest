@@ -33,7 +33,7 @@ namespace FoodServiceAPI.Controllers
 
         [Route("createpackage")]
         [HttpPost]
-        [Authorize("Session")]
+        [Authorize("SessionBusiness")]
         public async Task<string> CreatePackage([FromBody]string json)
         {
             throw new NotImplementedException(); // FIXME
@@ -41,7 +41,7 @@ namespace FoodServiceAPI.Controllers
 
         [Route("deletepackage")]
         [HttpPost]
-        [Authorize("Session")]
+        [Authorize("SessionBusiness")]
         public async Task<string> DeletePackage([FromBody]string json)
         {
             throw new NotImplementedException(); // FIXME
@@ -57,7 +57,7 @@ namespace FoodServiceAPI.Controllers
 
         [Route("markreceived")]
         [HttpPost]
-        [Authorize("Session")]
+        [Authorize("SessionBusiness")]
         public async Task<string> MarkReceived([FromBody]string json)
         {
             throw new NotImplementedException(); // FIXME
