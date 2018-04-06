@@ -23,37 +23,139 @@ namespace FoodServiceAPI.Controllers
     {
         private readonly FoodContext dbContext;
 
+        public class UserRegistration
+        {
+            public string username { get; set; }
+            public string password { get; set; }
+            public string email { get; set; }
+            public string address { get; set; }
+            public string zip { get; set; }
+            public string user_type { get; set; }
+
+            // Client
+            public string first_name { get; set; }
+            public string last_name { get; set; }
+            public string cell_phone { get; set; }
+            public bool paying { get; set; }
+
+            // Business
+            public string name { get; set; }
+            public string work_phone { get; set; }
+            public string instructions { get; set; }
+        }
+
+        public class UserInfo
+        {
+            public string username { get; set; }
+            public string email { get; set; }
+            public string address { get; set; }
+            public string zip { get; set; }
+
+            public UserInfo(UserData user)
+            {
+                username = user.username;
+                email = user.email;
+                address = user.address;
+                zip = user.zip;
+            }
+        }
+
+        public class ClientInfo : UserInfo
+        {
+	        public string first_name { get; set; }
+	        public string last_name { get; set; }
+	        public string cell_phone { get; set; }
+
+            public ClientInfo(Client client) : base(client.User)
+            {
+                first_name = client.first_name;
+                last_name = client.last_name;
+                cell_phone = client.cell_phone;
+            }
+        }
+
+        public class BusinessInfo : UserInfo
+        {
+            public string name { get; set; }
+            public string work_phone { get; set; }
+            public string instructions { get; set; }
+
+            public BusinessInfo(Business business) : base(business.User)
+            {
+                name = business.name;
+                work_phone = business.work_phone;
+                instructions = business.instructions;
+            }
+        }
+
+        public class LoginReturn
+        {
+            public string session_token { get; set; }
+        }
+
         public UserController(FoodContext dbContext)
         {
             this.dbContext = dbContext;
         }
 
-        // FIXME: This creates a placeholder user without validation; implement full registration
-        // FIXME: JSON input
         [Route("register")]
         [HttpPost]
         [AllowAnonymous]
-        public async Task<string> Register(string username, string password)
+        public async Task<JsonResult> Register([FromBody]UserRegistration reg)
         {
+            // FIXME: validate
             UserData user = new UserData
             {
-                username = username,
-                password = new PasswordProtector().Protect(password),
-                email = "no_email",
-                address = "no_address",
-                zip = "no_zip"
+                username = reg.username,
+                password = new PasswordProtector().Protect(reg.password),
+                email = reg.email,
+                address = reg.address,
+                zip = reg.zip
             };
 
             await dbContext.Users.AddAsync(user);
+
+            if (reg.user_type.ToLower() == "client")
+            {
+                Client client = new Client
+                {
+                    uid = user.uid,
+                    first_name = reg.first_name,
+                    last_name = reg.last_name,
+                    cell_phone = reg.cell_phone,
+                    paying = reg.paying
+                };
+
+                await dbContext.Clients.AddAsync(client);
+            }
+            else if (reg.user_type.ToLower() == "business")
+            {
+                Business business = new Business
+                {
+                    uid = user.uid,
+                    name = reg.name,
+                    work_phone = reg.work_phone,
+                    instructions = reg.instructions
+                };
+
+                await dbContext.Businesses.AddAsync(business);
+            }
+            else
+            {
+                Acknowledgement<object> invalid_user_ack = new Acknowledgement<object>("INVALID_USER_TYPE", "User type must be specified as business or client", null);
+                return Json(invalid_user_ack); 
+            }
+
             await dbContext.SaveChangesAsync();
 
-            return "OK"; // FIXME: Standard acknowledge
+            Acknowledgement<object> ack = new Acknowledgement<object>("OK", "Successfully created new user", null);
+            return Json(ack); 
         }
 
         [Route("login")]
         [HttpPost]
         [Authorize("UserPass")]
-        public async Task<string> Login()
+        public async Task<JsonResult> Login()
         {
             // Create session
             SessionData session = new SessionData
@@ -84,33 +186,66 @@ namespace FoodServiceAPI.Controllers
                 signingCredentials: credentials
             );
 
-            return new JwtSecurityTokenHandler().WriteToken(token); // FIXME: Standard acknowledge
+            LoginReturn ret = new LoginReturn
+            {
+                session_token = new JwtSecurityTokenHandler().WriteToken(token)
+            };
+
+            Acknowledgement<LoginReturn> ack = new Acknowledgement<LoginReturn>("OK", "Token succesfully created", ret);
+            return Json(ack);
         }
 
         [Route("logout")]
         [HttpPost]
         [Authorize("Session")]
-        public async Task<string> Logout()
+        public async Task<JsonResult> Logout()
         {
-            throw new NotImplementedException(); // FIXME
+            SessionData session = await dbContext.Sessions.FindAsync(Convert.ToInt32(User.FindFirstValue("sid")));
+            dbContext.Sessions.Remove(session);
+            await dbContext.SaveChangesAsync();
+
+            Acknowledgement<object> ack = new Acknowledgement<object>("OK", "User logout was a success", null);
+            return Json(ack);
         }
 
-        // FIXME: This placeholder returns username; implement actual getinfo
         [Route("getinfo")]
         [HttpPost]
         [Authorize("Session")]
-        public async Task<string> GetInfo()
+        public async Task<JsonResult> GetInfo()
         {
-            UserData user = await dbContext.Users.FindAsync(Convert.ToInt32(User.FindFirstValue("uid")));
-            return user.username;
+            int uid = Convert.ToInt32(User.FindFirstValue("uid"));
+            UserData user = await dbContext.Users.Include(u => u.Client).Include(u => u.Business).FirstOrDefaultAsync(u => u.uid == uid);
+
+            
+            if (user.Client != null)
+            {
+                Acknowledgement<ClientInfo> ack = new Acknowledgement<ClientInfo>("OK", "Request for user info success,", new ClientInfo(user.Client));
+                return Json(ack);
+            }
+            else if (user.Business != null)
+            {
+                Acknowledgement<BusinessInfo> ack = new Acknowledgement<BusinessInfo>("OK", "Request for business info success.", new BusinessInfo(user.Business));
+                return Json(ack);
+            }
+            else
+            {
+                Acknowledgement<object> ack = new Acknowledgement<object>("OTHER", "Function does not support this user type", null);
+                return Json(ack);
+            }
         }
 
         [Route("logoutall")]
         [HttpPost]
         [Authorize("UserPass")]
-        public async Task<string> LogoutAllSessions()
+        public async Task<JsonResult> LogoutAllSessions()
         {
-            throw new NotImplementedException(); // FIXME
+            int uid = Convert.ToInt32(User.FindFirstValue("uid"));
+            SessionData[] sessions = await dbContext.Sessions.Where(s => s.uid == uid).ToArrayAsync();
+            dbContext.Sessions.RemoveRange(sessions);
+            await dbContext.SaveChangesAsync();
+
+            Acknowledgement<object> ack = new Acknowledgement<object>("OK", "Successfully logged out of all sessions.", null);
+            return Json(ack);
         }
 
         [Route("setinfo")]
@@ -132,6 +267,7 @@ namespace FoodServiceAPI.Controllers
         [Route("delete")]
         [HttpPost]
         [Authorize("UserPass")]
+        [Authorize("Client")]
         public async Task<string> DeleteUser()
         {
             throw new NotImplementedException(); // FIXME

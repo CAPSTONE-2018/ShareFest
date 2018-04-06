@@ -93,11 +93,14 @@ namespace FoodServiceAPI
                     "sid" - session ID
                     "uid" - user ID
                     "created" - UTC time token was created
+                    "bid" - business ID if applicable
+                    "cid" - client ID if applicable
                 */
 
                 cfg.AddPolicy("Session", policy =>
                 {
-                    policy.AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme).RequireAuthenticatedUser();
+                    policy.AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme).
+                        RequireAuthenticatedUser();
                 });
 
                 /*
@@ -106,12 +109,21 @@ namespace FoodServiceAPI
                     Custom retrieved claims:
                     "uid" - user ID
                     "username"
+                    "bid" - business ID if applicable
+                    "cid" - client ID if applicable
                 */
 
                 cfg.AddPolicy("UserPass", policy =>
                 {
-                    policy.AddAuthenticationSchemes(PostAuthDefaults.AuthenticationScheme).RequireAuthenticatedUser();
+                    policy.AddAuthenticationSchemes(PostAuthDefaults.AuthenticationScheme).
+                        RequireAuthenticatedUser();
                 });
+
+                // This policy requires a bid claim
+                cfg.AddPolicy("Business", policy => policy.RequireClaim("bid"));
+
+                // This policy requires a cid claim
+                cfg.AddPolicy("Client", policy => policy.RequireClaim("cid"));
             });
         }
 
