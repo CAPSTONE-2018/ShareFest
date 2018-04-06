@@ -70,7 +70,7 @@ namespace FoodServiceAPI.Authentication
             if (session.bid != null)
                 userIdentity.AddClaim(new Claim("bid", session.bid.ToString()));
             else if(session.cid != null)
-                userIdentity.AddClaim(new Claim("cid", session.bid.ToString()));
+                userIdentity.AddClaim(new Claim("cid", session.cid.ToString()));
 
             principal.AddIdentity(userIdentity);
         }
