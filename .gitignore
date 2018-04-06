@@ -1,0 +1,6 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/SMSfoodServiceWebClient/SMSfoodServiceWebClient/Content/_bootswatch.scss
+/SMSfoodServiceWebClient/SMSfoodServiceWebClient/Content/_variable.scss

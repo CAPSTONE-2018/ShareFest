@@ -49,9 +49,9 @@ namespace SMSfoodServiceWebClient.Models
     public class LoginViewModel
     {
         [Required]
-        [Display(Name = "Email")]
+        [Display(Name = "Username")]
         [EmailAddress]
-        public string Email { get; set; }
+        public string Username { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
@@ -65,7 +65,15 @@ namespace SMSfoodServiceWebClient.Models
     public class RegisterViewModel
     {
         [Required]        
-        [Display(Name = "Name")]
+        [Display(Name = "First Name")]
+        public string first_name { get; set; }
+
+        [Required]
+        [Display(Name = "Last Name")]
+        public string last_name { get; set; }
+
+        [Required]
+        [Display(Name = "Company Name")]
         public string Name { get; set; }
 
         [Required]
@@ -75,6 +83,14 @@ namespace SMSfoodServiceWebClient.Models
         [Required]
         [Display(Name = "Address")]
         public string Address { get; set; }
+
+        [Required]
+        [Display(Name = "Zip code")]
+        public string zip { get; set; }
+
+        [Required]
+        [Display(Name = "Special Instructions")]
+        public string special { get; set; }
 
         [Required]
         [EmailAddress]
@@ -96,6 +112,10 @@ namespace SMSfoodServiceWebClient.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        [Display(Name = "Are you willing to pay for packages?")]
+        public bool pay { get; set; }
+
     }
 
     public class ResetPasswordViewModel
