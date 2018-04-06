@@ -18,6 +18,21 @@ namespace FoodServiceAPI.Controllers
     {
         private readonly FoodContext dbContext;
 
+        public class BusinessIdentifier
+        {
+            public int bid { get; set; }
+        }
+
+        public class BusinessInfo
+        {
+            public string email { get; set; }
+            public string address { get; set; }
+            public string zip { get; set; }
+            public string name { get; set; }
+            public string work_phone { get; set; }
+            public string instructions { get; set; }
+        }
+
         public BusinessController(FoodContext dbContext)
         {
             this.dbContext = dbContext;
@@ -26,9 +41,26 @@ namespace FoodServiceAPI.Controllers
         [Route("getbusiness")]
         [HttpPost]
         [AllowAnonymous]
-        public async Task<string> GetBusiness([FromBody] string json)
+        public async Task<JsonResult> GetBusiness([FromBody]BusinessIdentifier businessID)
         {
-            throw new NotImplementedException(); // FIXME
+            Business business = await dbContext.Businesses.Include(b => b.User).FirstOrDefaultAsync(b => b.bid == businessID.bid);
+
+            if(business == null)
+                return Json(new Acknowledgement<object>("INVALID_BID", "No business with given ID", null));
+
+            return Json(new Acknowledgement<BusinessInfo>(
+                "OK",
+                "Retrieved business info",
+                new BusinessInfo
+                {
+                    email = business.User.email,
+                    address = business.User.address,
+                    zip = business.User.zip,
+                    name = business.name,
+                    work_phone = business.work_phone,
+                    instructions = business.instructions
+                }
+            ));
         }
     }
 }
