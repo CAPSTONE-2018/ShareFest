@@ -33,7 +33,9 @@
         <activity android:name=".BusinessAccountActivity" />
         <activity android:name=".ClientCheckPackageActivity" />
         <activity android:name=".ClientAccountActivity" />
-        <activity android:name=".RegisterActivity"></activity>
+        <activity android:name=".RegisterActivity" />
+        <activity android:name=".RegisterBusinessActivity" />
+        <activity android:name=".RegisterClientActivity"></activity>
     </application>
 
 </manifest>
