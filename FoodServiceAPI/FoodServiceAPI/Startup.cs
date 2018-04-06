@@ -104,33 +104,13 @@ namespace FoodServiceAPI
                 });
 
                 /*
-                    Like Session but requires a bid claim
-                */
-
-                cfg.AddPolicy("SessionBusiness", policy =>
-                {
-                    policy.AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme).
-                        RequireAuthenticatedUser().
-                        RequireClaim("bid");
-                });
-
-                /*
-                    Like Session but requires a cid claim
-                */
-
-                cfg.AddPolicy("SessionClient", policy =>
-                {
-                    policy.AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme).
-                        RequireAuthenticatedUser().
-                        RequireClaim("cid");
-                });
-
-                /*
                     This policy requires a username and password in POST tied to a user_data.
 
                     Custom retrieved claims:
                     "uid" - user ID
                     "username"
+                    "bid" - business ID if applicable
+                    "cid" - client ID if applicable
                 */
 
                 cfg.AddPolicy("UserPass", policy =>
@@ -138,6 +118,12 @@ namespace FoodServiceAPI
                     policy.AddAuthenticationSchemes(PostAuthDefaults.AuthenticationScheme).
                         RequireAuthenticatedUser();
                 });
+
+                // This policy requires a bid claim
+                cfg.AddPolicy("Business", policy => policy.RequireClaim("bid"));
+
+                // This policy requires a cid claim
+                cfg.AddPolicy("Client", policy => policy.RequireClaim("cid"));
             });
         }
 

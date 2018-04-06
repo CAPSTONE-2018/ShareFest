@@ -62,9 +62,25 @@ namespace FoodServiceAPI.Authentication
                 cred = JsonConvert.DeserializeObject(body, typeof(Credentials)) as Credentials;
             }
 
-            // Get user entity
+            // Get user info
             FoodContext dbContext = Context.RequestServices.GetService(typeof(FoodContext)) as FoodContext;
-            UserData user = await dbContext.Users.FirstOrDefaultAsync(u => u.username == cred.username);
+
+            var user = await (
+                from u in dbContext.Users
+                where u.username == cred.username
+                join b in dbContext.Businesses on u.uid equals b.uid into ub
+                from b in ub.DefaultIfEmpty()
+                join c in dbContext.Clients on u.uid equals c.uid into ubc
+                from c in ubc.DefaultIfEmpty()
+                select new
+                {
+                    u.uid,
+                    u.username,
+                    u.password,
+                    bid = (int?)b.bid,
+                    cid = (int?)c.cid
+                }
+            ).FirstOrDefaultAsync();
 
             // Check password
             PasswordProtector protector = new PasswordProtector();
@@ -80,6 +96,12 @@ namespace FoodServiceAPI.Authentication
             };
 
             ClaimsIdentity identity = new ClaimsIdentity(claims, Scheme.Name);
+
+            if (user.bid != null)
+                identity.AddClaim(new Claim("bid", user.bid.ToString()));
+            else if (user.cid != null)
+                identity.AddClaim(new Claim("cid", user.cid.ToString()));
+
             ClaimsPrincipal principal = new ClaimsPrincipal(identity);
 
             return AuthenticateResult.Success(new AuthenticationTicket(principal, Scheme.Name));

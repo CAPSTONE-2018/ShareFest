@@ -267,6 +267,7 @@ namespace FoodServiceAPI.Controllers
         [Route("delete")]
         [HttpPost]
         [Authorize("UserPass")]
+        [Authorize("Client")]
         public async Task<string> DeleteUser()
         {
             throw new NotImplementedException(); // FIXME
