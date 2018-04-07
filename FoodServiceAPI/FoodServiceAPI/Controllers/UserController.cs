@@ -268,9 +268,21 @@ namespace FoodServiceAPI.Controllers
         [HttpPost]
         [Authorize("UserPass")]
         [Authorize("Client")]
-        public async Task<string> DeleteUser()
+        public async Task<JsonResult> DeleteUser()
         {
-            throw new NotImplementedException(); // FIXME
+            // FIXME: Error handle
+
+
+            int uid = Convert.ToInt32(User.FindFirstValue("uid"));
+            UserData userData = await dbContext.Users.FirstAsync(u => u.uid == uid);
+            Client user = await dbContext.Clients.FirstAsync(u => u.uid == uid);
+
+            dbContext.Clients.Remove(user);
+            dbContext.Users.Remove(userData);
+            await dbContext.SaveChangesAsync();
+
+            Acknowledgement<object> ack = new Acknowledgement<object>("OK", "User was deleted.", null);
+            return Json(ack);
         }
     }
 }
