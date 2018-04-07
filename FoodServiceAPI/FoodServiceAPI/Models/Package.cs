@@ -15,9 +15,9 @@ namespace FoodServiceAPI.Models
         public string quantity { get; set; }
         public decimal price { get; set; }
         public DateTime created { get; set; }
-        public DateTime expires { get; set; }
-        public DateTime claimed { get; set; }
-        public DateTime received { get; set; }
+        public DateTime? expires { get; set; }
+        public DateTime? claimed { get; set; }
+        public DateTime? received { get; set; }
 
         public Business Owner { get; set; }
         public Client Claimer { get; set; }
