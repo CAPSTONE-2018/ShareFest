@@ -23,19 +23,32 @@ namespace CapProj
             using (HttpClient client = new HttpClient())
             {
                 StringContent content = new StringContent(JsonConvert.SerializeObject(pairs), Encoding.UTF8, "application/json");
-                HttpResponseMessage response = await client.PostAsync("http://localhost:50576/" + route, content);
 
-                if (!response.IsSuccessStatusCode)
+                try
+                {
+                    HttpResponseMessage response = await client.PostAsync("http://localhost:50576/" + route, content);
+
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        return new Acknowledgement<T>
+                        {
+                            status = "OTHER",
+                            message = "Server Error", // FIXME: Set based on status code?
+                            data = default(T)
+                        };
+                    }
+
+                    return JsonConvert.DeserializeObject<Acknowledgement<T>>(await response.Content.ReadAsStringAsync());
+                }
+                catch(HttpRequestException ex)
                 {
                     return new Acknowledgement<T>
                     {
                         status = "OTHER",
-                        message = "Server Error", // FIXME: Set based on status code?
+                        message = ex.Message,
                         data = default(T)
                     };
                 }
-
-                return JsonConvert.DeserializeObject<Acknowledgement<T>>(await response.Content.ReadAsStringAsync());
             }
         }
     }
