@@ -31,6 +31,7 @@ namespace FoodServiceAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
             ConfigureAuthentication(services);
             ConfigureAuthorization(services);
             ConfigureDatabase(services);
@@ -45,6 +46,15 @@ namespace FoodServiceAPI
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            /* FIXME TEMP: CORS is set up to allow any origin in for now; need to configure to
+             * restrict to specific front-ends */
+            /* FIXME: When controller exceptions fall through, ASP.NET doesn't include the
+             * Access-Control-Allow-Origin pair in the response header. */
+            app.UseCors(cfg =>
+            {
+                cfg.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+            });
 
             app.UseAuthentication();
             app.UseMvc();
