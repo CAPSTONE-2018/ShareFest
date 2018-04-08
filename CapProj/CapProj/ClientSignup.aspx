@@ -1,5 +1,6 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ClientSignup.aspx.cs" Inherits="CapProj.ClientSignup" %>
+﻿<%@ Page Async="true" Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ClientSignup.aspx.cs" Inherits="CapProj.ClientSignup" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+
 <h2>Client Signup</h2>
 
 <div class="form-group">
@@ -92,7 +93,7 @@
         </div>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <asp:Button runat="server" Text="Register" CssClass="btn btn-default" />
+                <asp:Button runat="server" ID="Register" OnClick="RegisterBtn_Click" Text="Register" CssClass="btn btn-default" />
             </div>
         </div>
 </asp:Content>
