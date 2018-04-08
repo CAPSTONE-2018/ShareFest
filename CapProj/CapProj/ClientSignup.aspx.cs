@@ -34,9 +34,12 @@ namespace CapProj
             if(ack.status == "OK")
             {
                 // FIXME: Handle success
+                Response.Redirect("/Success");
             }
             else
             {
+
+                Response.Redirect("/Success");
                 // FIXME: Handle error
             }
         }

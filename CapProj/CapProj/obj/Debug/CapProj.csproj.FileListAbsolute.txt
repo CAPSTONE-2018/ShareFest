@@ -75,3 +75,8 @@ C:\Users\Martynas\Documents\Education\capstone\SMS-Food-Service\CapProj\CapProj\
 C:\Users\Martynas\Documents\Education\capstone\SMS-Food-Service\CapProj\CapProj\bin\System.Net.Http.Extensions.xml
 C:\Users\Martynas\Documents\Education\capstone\SMS-Food-Service\CapProj\CapProj\bin\System.Net.Http.Primitives.xml
 C:\Users\Martynas\Documents\Education\capstone\SMS-Food-Service\CapProj\CapProj\obj\Debug\CapProj.csproj.App.config
+C:\Users\Nadeem\Source\Repos\SMS-Food-Service\CapProj\CapProj\bin\System.Net.Http.Extensions.dll
+C:\Users\Nadeem\Source\Repos\SMS-Food-Service\CapProj\CapProj\bin\System.Net.Http.Primitives.dll
+C:\Users\Nadeem\Source\Repos\SMS-Food-Service\CapProj\CapProj\bin\System.Net.Http.Extensions.xml
+C:\Users\Nadeem\Source\Repos\SMS-Food-Service\CapProj\CapProj\bin\System.Net.Http.Primitives.xml
+C:\Users\Nadeem\Source\Repos\SMS-Food-Service\CapProj\CapProj\obj\Debug\CapProj.csproj.App.config
