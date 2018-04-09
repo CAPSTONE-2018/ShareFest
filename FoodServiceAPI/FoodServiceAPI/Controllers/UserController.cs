@@ -93,6 +93,33 @@ namespace FoodServiceAPI.Controllers
             public string session_token { get; set; }
         }
 
+        public class PasswordSetter
+        {
+            public string new_password { get; set; }
+
+        }
+
+        public class InfoUpdate
+        {
+            public string username { get; set; }
+            public string password { get; set; }
+
+            public string new_username { get; set; }
+            public string email { get; set; }
+            public string address { get; set; }
+            public string zip { get; set; }
+
+            //Client
+            public string first_name { get; set; }
+            public string last_name { get; set; }
+            public string cell_phone { get; set; }
+
+            //Business
+            public string name { get; set; }
+            public string work_phone { get; set; }
+            public string instructions { get; set; }
+        }
+
         public UserController(FoodContext dbContext)
         {
             this.dbContext = dbContext;
@@ -250,18 +277,61 @@ namespace FoodServiceAPI.Controllers
 
         [Route("setinfo")]
         [HttpPost]
-        [Authorize("UserPass")]
-        public async Task<string> SetInfo([FromBody] string json)
+        [Authorize("Session")] // FIXME: Should use UserPass, not Session. Session less secure.
+        public async Task<JsonResult> SetInfo([FromBody] InfoUpdate updated)
         {
-            throw new NotImplementedException(); // FIXME
+            int uid = Convert.ToInt32(User.FindFirstValue("uid"));
+            UserData user = await dbContext.Users.Include(u => u.Client).Include(u => u.Business).FirstOrDefaultAsync(u => u.uid == uid);
+            string stringuid = uid.ToString();
+
+            user.username = updated.new_username;
+            user.email = updated.email;
+            user.address = updated.address;
+            user.zip = updated.zip;
+
+            //FIXME: Validate
+            if (user.Client != null)
+            {
+                user.Client.first_name = updated.first_name;
+                user.Client.last_name = updated.last_name;
+                user.Client.cell_phone = updated.cell_phone;
+                await dbContext.SaveChangesAsync();
+
+                Acknowledgement<object> ack = new Acknowledgement<object>("OK", "Client info sucessfully updated.", null);
+                return Json(ack);
+            }
+            else if (user.Business != null)
+            {
+                user.Business.name = updated.name;
+                user.Business.work_phone = updated.work_phone;
+                user.Business.instructions = updated.instructions;
+                await dbContext.SaveChangesAsync();
+
+                Acknowledgement<object> ack = new Acknowledgement<object>("OK", "Business info sucessfully updated.", null);
+                return Json(ack);
+            }
+            else
+            {
+                Acknowledgement<object> ack = new Acknowledgement<object>("INVALID USER TYPE", "Invalid user type specified or no user type specified.", null);
+                return Json(ack);
+            }
         }
 
         [Route("setpassword")]
         [HttpPost]
-        [Authorize("UserPass")]
-        public async Task<string> SetPassword([FromBody] string json)
+        [Authorize("Session")] // FIXME: Should use  "UserPass", not session. Session less secure.
+        public async Task<JsonResult> SetPassword([FromBody]PasswordSetter new_pass)
         {
-            throw new NotImplementedException(); // FIXME
+
+            // FIXME: Error handle
+            int uid = Convert.ToInt32(User.FindFirstValue("uid"));
+            UserData userData = await dbContext.Users.FirstAsync(u => u.uid == uid);
+
+            userData.password = new PasswordProtector().Protect(new_pass.new_password);
+            dbContext.Users.Update(userData);
+            await dbContext.SaveChangesAsync();
+
+            return Json(new Acknowledgement<object>("OK", "Password set successful.", null));
         }
 
         [Route("delete")]
