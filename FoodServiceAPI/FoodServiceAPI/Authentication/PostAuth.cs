@@ -60,6 +60,9 @@ namespace FoodServiceAPI.Authentication
             {
                 string body = await reader.ReadToEndAsync();
                 cred = JsonConvert.DeserializeObject(body, typeof(Credentials)) as Credentials;
+
+                // Hack: copy request stream so it's not consumed
+                Request.Body = new MemoryStream(Encoding.UTF8.GetBytes(body));
             }
 
             // Get user info

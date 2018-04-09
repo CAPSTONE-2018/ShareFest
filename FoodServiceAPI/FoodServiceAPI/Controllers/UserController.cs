@@ -96,14 +96,10 @@ namespace FoodServiceAPI.Controllers
         public class PasswordSetter
         {
             public string new_password { get; set; }
-
         }
 
         public class InfoUpdate
         {
-            public string username { get; set; }
-            public string password { get; set; }
-
             public string new_username { get; set; }
             public string email { get; set; }
             public string address { get; set; }
@@ -277,7 +273,7 @@ namespace FoodServiceAPI.Controllers
 
         [Route("setinfo")]
         [HttpPost]
-        [Authorize("Session")] // FIXME: Should use UserPass, not Session. Session less secure.
+        [Authorize("UserPass")]
         public async Task<JsonResult> SetInfo([FromBody] InfoUpdate updated)
         {
             int uid = Convert.ToInt32(User.FindFirstValue("uid"));
@@ -307,22 +303,21 @@ namespace FoodServiceAPI.Controllers
                 user.Business.instructions = updated.instructions;
                 await dbContext.SaveChangesAsync();
 
-                Acknowledgement<object> ack = new Acknowledgement<object>("OK", "Business info sucessfully updated.", null);
+                Acknowledgement<object> ack = new Acknowledgement<object>("OK", "Business info successfully updated.", null);
                 return Json(ack);
             }
             else
             {
-                Acknowledgement<object> ack = new Acknowledgement<object>("INVALID USER TYPE", "Invalid user type specified or no user type specified.", null);
+                Acknowledgement<object> ack = new Acknowledgement<object>("INVALID_USER_TYPE", "Invalid user type specified or no user type specified.", null);
                 return Json(ack);
             }
         }
 
         [Route("setpassword")]
         [HttpPost]
-        [Authorize("Session")] // FIXME: Should use  "UserPass", not session. Session less secure.
+        [Authorize("UserPass")]
         public async Task<JsonResult> SetPassword([FromBody]PasswordSetter new_pass)
         {
-
             // FIXME: Error handle
             int uid = Convert.ToInt32(User.FindFirstValue("uid"));
             UserData userData = await dbContext.Users.FirstAsync(u => u.uid == uid);
@@ -341,8 +336,6 @@ namespace FoodServiceAPI.Controllers
         public async Task<JsonResult> DeleteUser()
         {
             // FIXME: Error handle
-
-
             int uid = Convert.ToInt32(User.FindFirstValue("uid"));
             UserData userData = await dbContext.Users.FirstAsync(u => u.uid == uid);
             Client user = await dbContext.Clients.FirstAsync(u => u.uid == uid);
