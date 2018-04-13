@@ -1,9 +1,10 @@
 ﻿<%@ Page Async="true" Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ClientSignup.aspx.cs" Inherits="CapProj.ClientSignup" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
-<h2>Client Signup</h2>
+<h4>Client Signup</h4>
 
 <div class="form-group">
+    <hr />
     <asp:Label runat="server" AssociatedControlID="FirstName" CssClass="col-md-2 control-label">First Name</asp:Label>
     
     <div class="col-md-10">
@@ -90,6 +91,14 @@
                 <asp:CompareValidator runat="server" ControlToCompare="Password" ControlToValidate="ConfirmPassword"
                     CssClass="text-danger" Display="Dynamic" ErrorMessage="The password and confirmation password do not match." />
             </div>
+        </div>
+        <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <div class="checkbox">
+                                <asp:CheckBox runat="server" ID="Pay" />
+                                <asp:Label runat="server" AssociatedControlID="Pay">Check if you are willing to pay for packages</asp:Label>
+                            </div>
+                        </div>
         </div>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
