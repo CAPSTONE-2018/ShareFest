@@ -10,7 +10,7 @@ import android.widget.RadioGroup;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private Button BusinessRegister;
+    private Button bregis;
     private RadioGroup RG;
     private RadioButton RBBusiness;
     private RadioButton RBClient;
@@ -22,13 +22,13 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        BusinessRegister = (Button) findViewById(R.id.btnNext);
+        bregis = (Button) findViewById(R.id.btnNext);
         RG = (RadioGroup) findViewById(R.id.radioGroupRegister);
         RBBusiness = (RadioButton) findViewById(R.id.rbtnBusiness);
         RBClient = (RadioButton) findViewById(R.id.rbtnClient);
 
 
-        BusinessRegister.setOnClickListener(new View.OnClickListener() {
+        bregis.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 

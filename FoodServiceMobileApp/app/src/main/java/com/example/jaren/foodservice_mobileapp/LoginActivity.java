@@ -24,7 +24,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         Name = (EditText) findViewById(R.id.etName);
-        Password = (EditText) findViewById(R.id.etClientPassword);
+        Password = (EditText) findViewById(R.id.etBusinessUsername);
         Info = (TextView) findViewById(R.id.tvInfo);
         Login = (Button) findViewById(R.id.btnLogin);
         Register = (Button) findViewById(R.id.btnRegister);
@@ -47,20 +47,6 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(registerIntent);
             }
         });
-
-        //that causes the problem....
-        //==============================================================
-
-//        BusinessRegister.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent BusinessRegisterIntent = new Intent(LoginActivity.this, RegisterBusinessActivity.class);
-//                startActivity(BusinessRegisterIntent);
-//            }
-//        });
-
-        //==============================================================
-
     }
 
 
