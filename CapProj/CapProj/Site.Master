@@ -38,26 +38,28 @@
                 <%--Site Scripts--%>
             </Scripts>
         </asp:ScriptManager>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <a class="navbar-brand" runat="server" href="~/">SMS-Food-Service</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation" style="">
+    <span class="navbar-toggler-icon"></span>
+  </button>
 
-        <div class="navbar navbar-inverse navbar-fixed-top">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" runat="server" href="~/">Food Service Home </a>
-                </div>
-                <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
-                        <li><a runat="server" href="~/ClientSignup">Client Signup</a></li>
-                        <li><a runat="server" href="~/BusinessSignup">Business Signup</a></li>
-                        <li><a runat="server" href="~/Login">Login</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+  <div class="collapse navbar-collapse" id="navbarColor01">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" runat="server" href="~/">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" runat="server" href="~/ClientSignup">Client Signup</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" runat="server" href="~/BusinessSignup">Business Signup</a>
+      </li>
+    </ul>
+    
+  </div>
+</nav>
+
         <div class="container body-content">
             <asp:ContentPlaceHolder ID="MainContent" runat="server">
             </asp:ContentPlaceHolder>

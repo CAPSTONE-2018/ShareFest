@@ -1,9 +1,10 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="BusinessSignup.aspx.cs" Inherits="CapProj.BusinessSignup" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
-<h2>Business Signup</h2>
+<h4>Business Signup</h4>
 
 <div class="form-group">
+    <hr />
     <asp:Label runat="server" AssociatedControlID="CompanyName" CssClass="col-md-2 control-label">Company Name</asp:Label>
     
     <div class="col-md-10">
