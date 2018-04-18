@@ -13,5 +13,33 @@ namespace CapProj
         {
 
         }
+
+        protected async void RegisterButtonClick(object sender, EventArgs e)
+        {
+            Dictionary<string, string> pairs = new Dictionary<string, string>
+            {
+                {"username", Username.Text },
+                {"password", Password.Text },
+                {"email", Email.Text },
+                {"address", Address.Text },
+                {"zip", Zip.Text },
+                {"user_type", "business" },
+                {"name", CompanyName.Text },
+                {"work_phone", Phone.Text },
+                {"instructions", Special.Text }
+            };
+
+            Acknowledgement<object> ack = await FoodAPI.Call<object>("api/user/register", pairs);
+
+            if (ack.status == "OK")
+            {
+                Response.Redirect("/Success");
+            }
+            else
+            {
+                Response.Redirect("/Success");
+                // FIX ME : Error handle
+            }
+        }
     }
 }
