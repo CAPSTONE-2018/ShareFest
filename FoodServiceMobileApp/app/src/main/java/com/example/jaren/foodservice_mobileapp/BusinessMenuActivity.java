@@ -38,13 +38,17 @@ public class BusinessMenuActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
                 switch (item.getItemId()){
-                    case R.id.nav_account:
+                    case R.id.nav_businessaccount:
                         Intent BusinessAccountIntent = new Intent(getApplicationContext(),BusinessAccountActivity.class);
                         startActivity(BusinessAccountIntent);
                         return true;
                     case R.id.nav_createpackage:
                         Intent BusinessCreatePackageIntent = new Intent(getApplicationContext(), BusinessCreatePackageActivity.class);
                         startActivity(BusinessCreatePackageIntent);
+                        return true;
+                    case R.id.nav_businessclaimablepackages:
+                        Intent BusinessClaimablePackagesIntent = new Intent(getApplicationContext(), BusinessClaimablePackagesActivity.class);
+                        startActivity(BusinessClaimablePackagesIntent);
                         return true;
                     case R.id.nav_logout:
                         Intent LogoutIntent = new Intent(getApplicationContext(), LoginActivity.class);

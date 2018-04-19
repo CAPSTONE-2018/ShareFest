@@ -39,13 +39,17 @@ public class ClientMenuActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(MenuItem item) {
                 switch (item.getItemId()){
                     // MENU ITEMS
-                    case R.id.nav_account:
+                    case R.id.nav_clientaccount:
                         Intent ClientAccountIntent = new Intent(getApplicationContext(),ClientAccountActivity.class);
                         startActivity(ClientAccountIntent);
                         return true;
-                    case R.id.nav_checkpackage:
-                        Intent ClientCheckPackage = new Intent(getApplicationContext(), ClientCheckPackageActivity.class);
-                        startActivity(ClientCheckPackage);
+                    case R.id.nav_clientclaimablepackages:
+                        Intent ClientCheckPackageIntent = new Intent(getApplicationContext(), ClientCheckPackageActivity.class);
+                        startActivity(ClientCheckPackageIntent);
+                        return true;
+                    case R.id.nav_claimpacakage:
+                        Intent ClientClaimPackageIntent = new Intent(getApplicationContext(), ClientClaimPackageActivity.class);
+                        startActivity(ClientClaimPackageIntent);
                         return true;
                     case R.id.nav_logout:
                         Intent LogoutIntent = new Intent(getApplicationContext(), LoginActivity.class);

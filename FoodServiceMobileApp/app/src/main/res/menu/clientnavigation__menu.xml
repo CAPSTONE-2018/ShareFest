@@ -2,9 +2,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:id="@+id/nav_checkpackage"
+    <item android:id="@+id/nav_clientclaimablepackages"
         android:icon="@mipmap/ic_notifications_black_24dp"
-        android:title="Packages"/>
+        android:title="Claimable Packages"/>
+
+    <item android:id="@+id/nav_claimpacakage"
+        android:icon="@mipmap/ic_notifications_black_24dp"
+        android:title="Claim Package"/>
 
     <item android:id="@+id/nav_clientaccount"
         android:icon="@mipmap/ic_account_box_black_24dp"
