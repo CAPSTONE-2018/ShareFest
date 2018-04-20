@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Text;
 using Newtonsoft.Json;
@@ -18,15 +19,21 @@ namespace CapProj
 
     public class FoodAPI
     {
-        static public async Task<Acknowledgement<T>> Call<T>(string route, Dictionary<string, string> pairs)
-        {
-            using (HttpClient client = new HttpClient())
-            {
-                StringContent content = new StringContent(JsonConvert.SerializeObject(pairs), Encoding.UTF8, "application/json");
+        static public HttpClient httpClient = new HttpClient();
 
+        static public async Task<Acknowledgement<T>> Call<T>(string route, Dictionary<string, string> pairs = null, string session = null)
+        {
+            using(StringContent content = pairs != null ? new StringContent(JsonConvert.SerializeObject(pairs), Encoding.UTF8, "application/json") : null)
+            using(HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, "http://localhost:50576/" + route))
+            {
                 try
                 {
-                    HttpResponseMessage response = await client.PostAsync("http://localhost:50576/" + route, content);
+                    request.Content = content;
+
+                    if(session != null)
+                        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", session);
+
+                    HttpResponseMessage response = await httpClient.SendAsync(request);
 
                     if (!response.IsSuccessStatusCode)
                     {
