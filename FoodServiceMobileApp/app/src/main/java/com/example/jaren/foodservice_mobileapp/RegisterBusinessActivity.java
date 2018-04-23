@@ -1,8 +1,10 @@
 package com.example.jaren.foodservice_mobileapp;
 
 import android.content.Intent;
+import android.nfc.Tag;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -38,7 +40,7 @@ private String user_type;
 private String name;
 private String work_phone;
 
-public String localhost = "http://localhost:50576/api/user/register";
+public String localhost = "http://10.0.2.2:50576/api/user/register";
 
 
     @Override
@@ -95,6 +97,7 @@ public String localhost = "http://localhost:50576/api/user/register";
 
                 HttpPostAsyncTask task = new HttpPostAsyncTask(postData);
                 task.execute(localhost);
+                Log.d("RegisBusinessActivity", "sent");
             }
         });
 

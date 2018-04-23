@@ -10,6 +10,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -23,6 +24,7 @@ public class HttpPostAsyncTask extends AsyncTask<String, Void, Void>{
     JSONObject postData;
 
     public HttpPostAsyncTask(Map<String, String> postData){
+        Log.d("tag", "public httpostasync");
         if (postData != null) {
             this.postData = new JSONObject(postData);
         }
@@ -30,40 +32,48 @@ public class HttpPostAsyncTask extends AsyncTask<String, Void, Void>{
 
     @Override
     protected Void doInBackground(String... params) {
+        Log.d("tag", "doinbackground");
         try {
             URL url = new URL (params[0]);
 
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setDoInput(true);
             urlConnection.setDoOutput(true);
-            urlConnection.setRequestProperty("Content-Type", "application/json");
+            urlConnection.setRequestProperty("Content-Type", "application/json; charset=utf-8");
             urlConnection.setRequestMethod("POST");
 
             if (this.postData != null){
-                OutputStreamWriter writer = new OutputStreamWriter(urlConnection.getOutputStream());
+                OutputStream os = urlConnection.getOutputStream();
+                OutputStreamWriter writer = new OutputStreamWriter(os);
                 writer.write(postData.toString());
+                Log.d("postdata", "wroteyee");
                 writer.flush();
+                writer.close();
+                os.close();
             }
 
-            int statusCode =urlConnection.getResponseCode();
+            int statusCode = urlConnection.getResponseCode();
 
             if (statusCode == 200){
+                Log.d("statuscode", "success 200");
                 InputStream inputStream = new BufferedInputStream(urlConnection.getInputStream());
                 String response = convertInputStreamToString(inputStream);
                 JSONObject jsonObj = new JSONObject(response);
             }
             else {
+                Log.d("statuscodeno", "nope" + statusCode);
                 Log.d(TAG, Integer.toString(statusCode));
             }
 
 
         } catch (Exception e){
-            Log.d(TAG, e.getLocalizedMessage());
+            Log.d("exception", e.getLocalizedMessage());
         }
         return null;
     }
 
     public String convertInputStreamToString (InputStream inputStream){
+        Log.d("converto", "converted");
         InputStreamReader isr = null;
         BufferedReader br = null;
         StringBuilder sb = new StringBuilder();
@@ -78,7 +88,7 @@ public class HttpPostAsyncTask extends AsyncTask<String, Void, Void>{
             isr.close();
             br.close();
         } catch (IOException e){
-            e.printStackTrace();
+            Log.d("converto", e.getLocalizedMessage());
         }
 
         String mystring = sb.toString();
