@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="CapProj._Default" %>
+﻿<%@ Page Async = "true" Title="Home Page" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="CapProj._Default" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
     <h4>Welcome, Please log in below if you already have an account.</h4>
@@ -36,7 +36,7 @@
                     </div>
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-10">
-                            <asp:Button runat="server" Text="Log in" CssClass="btn btn-default" />
+                            <asp:Button runat="server" Text="Log in" ID ="Login" OnClick="LogInButtonClick" CssClass="btn btn-default" />
                         </div>
                     </div>
                 </div>

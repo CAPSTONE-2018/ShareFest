@@ -26,7 +26,7 @@ namespace CapProj
                 { "first_name", FirstName.Text },
                 { "last_name", LastName.Text },
                 { "cell_phone", Phone.Text },
-                { "paying", "true" } // FIXME: Add paying check box
+                { "paying", Pay.Checked.ToString() }
             };
 
             Acknowledgement<object> ack = await FoodAPI.Call<object>("api/user/register", pairs);
