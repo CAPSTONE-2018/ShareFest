@@ -16,6 +16,8 @@ using Microsoft.EntityFrameworkCore;
 using System.Text;
 using FoodServiceAPI.Authentication;
 using FoodServiceAPI.Database;
+using FluentScheduler;
+using FoodServiceAPI.Jobs;
 
 namespace FoodServiceAPI
 {
@@ -36,6 +38,18 @@ namespace FoodServiceAPI
             ConfigureAuthorization(services);
             ConfigureDatabase(services);
             services.AddMvc();
+
+            Registry JRegistry = new Registry();
+            JobManager.Initialize(JRegistry);
+            
+
+            //FIXME: how to access dbcontext???
+            JobManager.AddJob(
+              new SessionTokenMaintainence(dbcontext),
+              s => s.ToRunEvery(1).Days().At(24, 00) //Run every day at midnight
+                );
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
