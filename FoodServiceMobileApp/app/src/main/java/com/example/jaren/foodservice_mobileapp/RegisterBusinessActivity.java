@@ -56,7 +56,7 @@ public String localhost = "http://10.0.2.2:50576/api/user/register";
         BusinessAddress = (EditText) findViewById(R.id.etBusinessAddress);
         BusinessPhone = (EditText) findViewById(R.id.etBusinessPhone);
         BusinessEmail = (EditText) findViewById(R.id.etBusinessEmail);
-        BusinessPassword = (EditText) findViewById(R.id.etBusinessUsername);
+        BusinessPassword = (EditText) findViewById(R.id.etBusinessPassword);
         BusinessZip = (EditText) findViewById(R.id.etBusinessZip);
 
 

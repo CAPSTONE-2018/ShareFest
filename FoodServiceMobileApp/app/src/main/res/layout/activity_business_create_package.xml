@@ -8,15 +8,111 @@
 
     <TextView
         android:id="@+id/textView5"
+        android:layout_width="146dp"
+        android:layout_height="46dp"
+        android:text="TextView"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="349dp" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="146dp"
+        android:layout_height="46dp"
+        android:text="TextView"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="282dp" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="146dp"
+        android:layout_height="46dp"
+        android:text="TextView"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="216dp" />
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="146dp"
+        android:layout_height="46dp"
+        android:text="TextView"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="160dp" />
+
+    <EditText
+        android:id="@+id/editText2"
+        android:layout_width="163dp"
+        android:layout_height="46dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        tools:layout_editor_absoluteX="181dp"
+        tools:layout_editor_absoluteY="282dp" />
+
+    <EditText
+        android:id="@+id/editText4"
+        android:layout_width="163dp"
+        android:layout_height="46dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        tools:layout_editor_absoluteX="181dp"
+        tools:layout_editor_absoluteY="226dp" />
+
+    <EditText
+        android:id="@+id/editText5"
+        android:layout_width="163dp"
+        android:layout_height="46dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        tools:layout_editor_absoluteX="181dp"
+        tools:layout_editor_absoluteY="340dp" />
+
+    <EditText
+        android:id="@+id/editText3"
+        android:layout_width="163dp"
+        android:layout_height="46dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        tools:layout_editor_absoluteX="181dp"
+        tools:layout_editor_absoluteY="170dp" />
+
+    <Button
+        android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="B CREATE PACKAGE ACTIVITY"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="Button"
+        tools:layout_editor_absoluteX="204dp"
+        tools:layout_editor_absoluteY="482dp" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        tools:layout_editor_absoluteX="55dp"
+        tools:layout_editor_absoluteY="482dp" />
+
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="163dp"
+        android:layout_height="46dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        tools:layout_editor_absoluteX="181dp"
+        tools:layout_editor_absoluteY="114dp" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="146dp"
+        android:layout_height="46dp"
+        android:text="TextView"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="114dp" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Create Package"
+        android:textSize="24dp"
+        tools:layout_editor_absoluteX="96dp"
+        tools:layout_editor_absoluteY="28dp" />
 </android.support.constraint.ConstraintLayout>
