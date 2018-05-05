@@ -20,19 +20,35 @@ import static android.content.ContentValues.TAG;
 
 // https://medium.com/@lewisjkl/android-httpurlconnection-with-asynctask-tutorial-7ce5bf0245cd
 
-public class HttpPostAsyncTask extends AsyncTask<String, Void, Void>{
-    JSONObject postData;
+class HttpPostCallbackResult
+{
+    public int statusCode;
+    public JSONObject jsonObj;
 
-    public HttpPostAsyncTask(Map<String, String> postData){
-        Log.d("tag", "public httpostasync");
+    public HttpPostCallbackResult(int statusCode, JSONObject jsonObj){
+        this.statusCode = statusCode;
+        this.jsonObj = jsonObj;
+    }
+}
+
+public class HttpPostAsyncTask extends AsyncTask<String, Void, HttpPostCallbackResult>{
+    JSONObject postData;
+    Callback callback;
+
+    public interface Callback {
+        void onPostExecute(HttpPostCallbackResult result);
+    }
+
+    public HttpPostAsyncTask(Map<String, String> postData, Callback callback){
         if (postData != null) {
             this.postData = new JSONObject(postData);
         }
+
+        this.callback = callback;
     }
 
     @Override
-    protected Void doInBackground(String... params) {
-        Log.d("tag", "doinbackground");
+    protected HttpPostCallbackResult doInBackground(String... params) {
         try {
             URL url = new URL (params[0]);
 
@@ -46,7 +62,6 @@ public class HttpPostAsyncTask extends AsyncTask<String, Void, Void>{
                 OutputStream os = urlConnection.getOutputStream();
                 OutputStreamWriter writer = new OutputStreamWriter(os);
                 writer.write(postData.toString());
-                Log.d("postdata", "wroteyee");
                 writer.flush();
                 writer.close();
                 os.close();
@@ -55,25 +70,28 @@ public class HttpPostAsyncTask extends AsyncTask<String, Void, Void>{
             int statusCode = urlConnection.getResponseCode();
 
             if (statusCode == 200){
-                Log.d("statuscode", "success 200");
                 InputStream inputStream = new BufferedInputStream(urlConnection.getInputStream());
                 String response = convertInputStreamToString(inputStream);
-                JSONObject jsonObj = new JSONObject(response);
+                return new HttpPostCallbackResult(statusCode, new JSONObject(response));
             }
             else {
-                Log.d("statuscodeno", "nope" + statusCode);
                 Log.d(TAG, Integer.toString(statusCode));
+                return new HttpPostCallbackResult(statusCode, null);
             }
-
-
         } catch (Exception e){
             Log.d("exception", e.getLocalizedMessage());
         }
+
         return null;
     }
 
+    @Override
+    protected void onPostExecute(HttpPostCallbackResult result)
+    {
+        callback.onPostExecute(result);
+    }
+
     public String convertInputStreamToString (InputStream inputStream){
-        Log.d("converto", "converted");
         InputStreamReader isr = null;
         BufferedReader br = null;
         StringBuilder sb = new StringBuilder();

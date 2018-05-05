@@ -42,6 +42,16 @@ private String work_phone;
 
 public String localhost = "http://10.0.2.2:50576/api/user/register";
 
+private class RegisterCallback implements HttpPostAsyncTask.Callback {
+    public void onPostExecute(HttpPostCallbackResult result)
+    {
+        // FIXME: notify user of success/failure, redirect to login, etc.
+        if(result.statusCode == 200)
+            BusinessName.setText("registered :^)");
+        else
+            BusinessName.setText("fail: " + Integer.toString(result.statusCode));
+    }
+}
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,14 +105,11 @@ public String localhost = "http://10.0.2.2:50576/api/user/register";
                 postData.put("name", name);
                 postData.put("work_phone", name);
 
-                HttpPostAsyncTask task = new HttpPostAsyncTask(postData);
+                HttpPostAsyncTask task = new HttpPostAsyncTask(postData, new RegisterCallback());
                 task.execute(localhost);
                 Log.d("RegisBusinessActivity", "sent");
             }
         });
 
     }
-
-
-
 }
