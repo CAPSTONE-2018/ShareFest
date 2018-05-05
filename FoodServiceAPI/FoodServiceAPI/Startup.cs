@@ -39,18 +39,6 @@ namespace FoodServiceAPI
             ConfigureDatabase(services);
             ConfigureScheduler();
             services.AddMvc();
-
-            Registry JRegistry = new Registry();
-            JobManager.Initialize(JRegistry);
-            
-
-            //FIXME: how to access dbcontext???
-            JobManager.AddJob(
-              new SessionTokenMaintainence(dbcontext),
-              s => s.ToRunEvery(1).Days().At(24, 00) //Run every day at midnight
-                );
-
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -72,6 +60,11 @@ namespace FoodServiceAPI
             });
             app.UseAuthentication();
             app.UseMvc();
+
+            JobManager.AddJob(
+                new SessionTokenMaintenance(app.ApplicationServices.GetService<DbContextOptions>()),
+                s => s.ToRunEvery(1).Days().At(0, 0) //Run every day at midnight
+            );
         }
 
         public void ConfigureAuthentication(IServiceCollection services)

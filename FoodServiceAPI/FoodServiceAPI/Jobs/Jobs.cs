@@ -9,19 +9,22 @@ using FoodServiceAPI.Models;
 
 namespace FoodServiceAPI.Jobs
 {
-    public class SessionTokenMaintainence : IJob
+    public class SessionTokenMaintenance : IJob
     {
-        private FoodContext dbContext;
+        private DbContextOptions dbOptions;
 
-        public SessionTokenMaintainence(FoodContext dbContext)
+        public SessionTokenMaintenance(DbContextOptions dbOptions)
         {
-            this.dbContext = dbContext;
+            this.dbOptions = dbOptions;
         }
 
         public void Execute()
         {
-            dbContext.Sessions.RemoveRange(dbContext.Sessions.Where(s => s.expires <= DateTime.UtcNow));
-            dbContext.SaveChanges();
+            using(FoodContext dbContext = new FoodContext(dbOptions))
+            {
+                dbContext.Sessions.RemoveRange(dbContext.Sessions.Where(s => s.expires <= DateTime.UtcNow));
+                dbContext.SaveChanges();
+            }
         }
     }
 
