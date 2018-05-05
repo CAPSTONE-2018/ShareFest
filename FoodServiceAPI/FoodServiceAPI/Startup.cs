@@ -37,6 +37,7 @@ namespace FoodServiceAPI
             ConfigureAuthentication(services);
             ConfigureAuthorization(services);
             ConfigureDatabase(services);
+            ConfigureScheduler();
             services.AddMvc();
 
             Registry JRegistry = new Registry();
@@ -69,7 +70,6 @@ namespace FoodServiceAPI
             {
                 cfg.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
             });
-
             app.UseAuthentication();
             app.UseMvc();
         }
@@ -156,7 +156,19 @@ namespace FoodServiceAPI
             Action<DbContextOptionsBuilder> buildAction = optionsBuilder =>
             { optionsBuilder.UseMySQL(Configuration.GetConnectionString("FoodDatabase")); };
 
-            services.AddDbContext<FoodContext>(buildAction);
+            services.AddDbContext<FoodContext>(buildAction, ServiceLifetime.Scoped);
+
+            // Add DbContextOptions singleton so configured FoodContext can be created manually
+            DbContextOptionsBuilder builder = new DbContextOptionsBuilder();
+            buildAction(builder);
+            services.AddSingleton(builder.Options);
+        }
+
+        public void ConfigureScheduler()
+        {
+            // Can add a handler delegate for exceptions thrown in background jobs here
+            // FluentScheduler.JobManager.JobException += ...
+            FluentScheduler.JobManager.Initialize();
         }
     }
 }

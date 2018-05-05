@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc;
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using System.Security.Claims;
 using FoodServiceAPI.Database;
 using FoodServiceAPI.Models;
+using FoodServiceAPI.Jobs;
 
 namespace FoodServiceAPI.Controllers
 {
@@ -18,6 +20,7 @@ namespace FoodServiceAPI.Controllers
     public class PackageController : Controller
     {
         private readonly FoodContext dbContext;
+        private readonly DbContextOptions dbOptions;
 
         public class PackageRetrievalOptions
         {
@@ -82,9 +85,10 @@ namespace FoodServiceAPI.Controllers
             public List<PackageInfo> packages { get; set; }
         }
 
-        public PackageController(FoodContext dbContext)
+        public PackageController(FoodContext dbContext, DbContextOptions dbOptions)
         {
             this.dbContext = dbContext;
+            this.dbOptions = dbOptions;
         }
 
         [Route("getpackages")]
@@ -151,13 +155,9 @@ namespace FoodServiceAPI.Controllers
             };
 
             await dbContext.Packages.AddAsync(package);
-
-            // Notify all applicable clients immediately
-            /* FIXME: This is temporary. Later, clients will be gradually and selectively
-             * notified through asynchronous queuing. */
-            await CreatePackageNotices(package);
-
             await dbContext.SaveChangesAsync();
+            StartPackageNotification(package);
+
             return Json(new Acknowledgement<object>("OK", "Created package", null));
         }
 
@@ -230,22 +230,19 @@ namespace FoodServiceAPI.Controllers
             if (claimerCID == null)
             {
                 package.claimed = null;
+                await dbContext.SaveChangesAsync();
 
-                // Recreate notices
-                /* FIXME: It is unclear how this is going to work when queuing is implemented;
-                 * should previous notices be restored when a package is unclaimed, or does the
-                 * queuing process restart completely? */
-                await CreatePackageNotices(package);
+                // Begin recreating notices
+                /* FIXME: It would be nice to retrieve or reactivate old notices from before the
+                package was claimed */
+                StartPackageNotification(package);
             }
             else
             {
                 package.claimed = DateTime.UtcNow;
-
-                // Delete notices
-                dbContext.Notices.RemoveRange(dbContext.Notices.Where(n => n.pid == package.pid));
+                dbContext.Notices.RemoveRange(dbContext.Notices.Where(n => n.pid == package.pid)); // Delete all notices
+                await dbContext.SaveChangesAsync();
             }
-
-            await dbContext.SaveChangesAsync();
 
             return Json(new Acknowledgement<object>(
                 "OK",
@@ -271,18 +268,16 @@ namespace FoodServiceAPI.Controllers
             return Json(new Acknowledgement<object>("OK", "Marked package as received", null));
         }
 
-        // Database context's SaveChanges must be called after this
-        public async Task CreatePackageNotices(Package package)
+        public void StartPackageNotification(Package package)
         {
-            IQueryable<Client> viableClients;
+            // FIXME: Should be variables based on number of viable clients and expiration date
+            const int INTERVAL = 10;
+            const int NUM_PER_NOTIFY = 1;
 
-            if (package.price == 0.0m)
-                viableClients = dbContext.Clients;
-            else
-                viableClients = dbContext.Clients.Where(c => c.paying == true);
-
-            foreach (Client c in viableClients)
-                await dbContext.Notices.AddAsync(new Notice { cid = c.cid, pid = package.pid });
+            FluentScheduler.JobManager.AddJob(
+                new PackageNotifyJob(dbOptions, package.pid, INTERVAL, NUM_PER_NOTIFY),
+                s => s.ToRunNow()
+            );
         }
     }
 }
