@@ -124,7 +124,7 @@ namespace FoodServiceAPI.Controllers
         [Route("register")]
         [HttpPost]
         [AllowAnonymous]
-        public async Task<JsonResult> Register([FromBody]UserRegistration reg)
+        public async Task<IActionResult> Register([FromBody]UserRegistration reg)
         {
             // FIXME: validate
             UserData user = new UserData
@@ -171,14 +171,14 @@ namespace FoodServiceAPI.Controllers
 
             await dbContext.SaveChangesAsync();
 
-            Acknowledgement<object> ack = new Acknowledgement<object>("OK", "Successfully created new user", null);
-            return Json(ack); 
+            //Acknowledgement<object> ack = new Acknowledgement<object>("OK", "Successfully created new user", null);
+            return Ok("Successfully created new user"); 
         }
 
         [Route("login")]
         [HttpPost]
         [Authorize("UserPass")]
-        public async Task<JsonResult> Login()
+        public async Task<IActionResult> Login()
         {
             // Create session
             SessionData session = new SessionData
@@ -214,27 +214,27 @@ namespace FoodServiceAPI.Controllers
                 session_token = new JwtSecurityTokenHandler().WriteToken(token)
             };
 
-            Acknowledgement<LoginReturn> ack = new Acknowledgement<LoginReturn>("OK", "Token succesfully created", ret);
-            return Json(ack);
+            //Acknowledgement<LoginReturn> ack = new Acknowledgement<LoginReturn>("OK", "Token succesfully created", ret);
+            return Ok(ret);
         }
 
         [Route("logout")]
         [HttpPost]
         [Authorize("Session")]
-        public async Task<JsonResult> Logout()
+        public async Task<IActionResult> Logout()
         {
             SessionData session = await dbContext.Sessions.FindAsync(Convert.ToInt32(User.FindFirstValue("sid")));
             dbContext.Sessions.Remove(session);
             await dbContext.SaveChangesAsync();
 
-            Acknowledgement<object> ack = new Acknowledgement<object>("OK", "User logout was a success", null);
-            return Json(ack);
+            //Acknowledgement<object> ack = new Acknowledgement<object>("OK", "User logout was a success", null);
+            return Ok("Log out was a success.");
         }
 
         [Route("getinfo")]
         [HttpPost]
         [Authorize("Session")]
-        public async Task<JsonResult> GetInfo()
+        public async Task<IActionResult> GetInfo()
         {
             int uid = Convert.ToInt32(User.FindFirstValue("uid"));
             UserData user = await dbContext.Users.Include(u => u.Client).Include(u => u.Business).FirstOrDefaultAsync(u => u.uid == uid);
@@ -242,39 +242,39 @@ namespace FoodServiceAPI.Controllers
             
             if (user.Client != null)
             {
-                Acknowledgement<ClientInfo> ack = new Acknowledgement<ClientInfo>("OK", "Request for user info success,", new ClientInfo(user.Client));
-                return Json(ack);
+                //Acknowledgement<ClientInfo> ack = new Acknowledgement<ClientInfo>("OK", "Request for user info success,", new ClientInfo(user.Client));
+                return Ok(new ClientInfo(user.Client));
             }
             else if (user.Business != null)
             {
-                Acknowledgement<BusinessInfo> ack = new Acknowledgement<BusinessInfo>("OK", "Request for business info success.", new BusinessInfo(user.Business));
-                return Json(ack);
+                //Acknowledgement<BusinessInfo> ack = new Acknowledgement<BusinessInfo>("OK", "Request for business info success.", new BusinessInfo(user.Business));
+                return Ok(new BusinessInfo(user.Business));
             }
             else
             {
-                Acknowledgement<object> ack = new Acknowledgement<object>("OTHER", "Function does not support this user type", null);
-                return Json(ack);
+                //Acknowledgement<object> ack = new Acknowledgement<object>("OTHER", "Function does not support this user type", null);
+                return BadRequest("Function does not support this type of user.");
             }
         }
 
         [Route("logoutall")]
         [HttpPost]
         [Authorize("UserPass")]
-        public async Task<JsonResult> LogoutAllSessions()
+        public async Task<IActionResult> LogoutAllSessions()
         {
             int uid = Convert.ToInt32(User.FindFirstValue("uid"));
             SessionData[] sessions = await dbContext.Sessions.Where(s => s.uid == uid).ToArrayAsync();
             dbContext.Sessions.RemoveRange(sessions);
             await dbContext.SaveChangesAsync();
 
-            Acknowledgement<object> ack = new Acknowledgement<object>("OK", "Successfully logged out of all sessions.", null);
-            return Json(ack);
+            //Acknowledgement<object> ack = new Acknowledgement<object>("OK", "Successfully logged out of all sessions.", null);
+            return Ok("Successfully logged out of all sessions.");
         }
 
         [Route("setinfo")]
         [HttpPost]
         [Authorize("UserPass")]
-        public async Task<JsonResult> SetInfo([FromBody] InfoUpdate updated)
+        public async Task<IActionResult> SetInfo([FromBody] InfoUpdate updated)
         {
             int uid = Convert.ToInt32(User.FindFirstValue("uid"));
             UserData user = await dbContext.Users.Include(u => u.Client).Include(u => u.Business).FirstOrDefaultAsync(u => u.uid == uid);
@@ -293,8 +293,8 @@ namespace FoodServiceAPI.Controllers
                 user.Client.cell_phone = updated.cell_phone;
                 await dbContext.SaveChangesAsync();
 
-                Acknowledgement<object> ack = new Acknowledgement<object>("OK", "Client info sucessfully updated.", null);
-                return Json(ack);
+                //Acknowledgement<object> ack = new Acknowledgement<object>("OK", "Client info sucessfully updated.", null);
+                return Ok("Client info updated.");
             }
             else if (user.Business != null)
             {
@@ -303,20 +303,20 @@ namespace FoodServiceAPI.Controllers
                 user.Business.instructions = updated.instructions;
                 await dbContext.SaveChangesAsync();
 
-                Acknowledgement<object> ack = new Acknowledgement<object>("OK", "Business info successfully updated.", null);
-                return Json(ack);
+                //Acknowledgement<object> ack = new Acknowledgement<object>("OK", "Business info successfully updated.", null);
+                return Ok("Business info updated.");
             }
             else
             {
-                Acknowledgement<object> ack = new Acknowledgement<object>("INVALID_USER_TYPE", "Invalid user type specified or no user type specified.", null);
-                return Json(ack);
+                //Acknowledgement<object> ack = new Acknowledgement<object>("INVALID_USER_TYPE", "Invalid user type specified or no user type specified.", null);
+                return BadRequest("User type was invalid.");
             }
         }
 
         [Route("setpassword")]
         [HttpPost]
         [Authorize("UserPass")]
-        public async Task<JsonResult> SetPassword([FromBody]PasswordSetter new_pass)
+        public async Task<IActionResult> SetPassword([FromBody]PasswordSetter new_pass)
         {
             // FIXME: Error handle
             int uid = Convert.ToInt32(User.FindFirstValue("uid"));
@@ -326,14 +326,15 @@ namespace FoodServiceAPI.Controllers
             dbContext.Users.Update(userData);
             await dbContext.SaveChangesAsync();
 
-            return Json(new Acknowledgement<object>("OK", "Password set successful.", null));
+            return Ok("Password has been reset.");
+            //return Json(new Acknowledgement<object>("OK", "Password set successful.", null));
         }
 
         [Route("delete")]
         [HttpPost]
         [Authorize("UserPass")]
         [Authorize("Client")]
-        public async Task<JsonResult> DeleteUser()
+        public async Task<IActionResult> DeleteUser()
         {
             // FIXME: Error handle
             int uid = Convert.ToInt32(User.FindFirstValue("uid"));
@@ -344,8 +345,8 @@ namespace FoodServiceAPI.Controllers
             dbContext.Users.Remove(userData);
             await dbContext.SaveChangesAsync();
 
-            Acknowledgement<object> ack = new Acknowledgement<object>("OK", "User was deleted.", null);
-            return Json(ack);
+            //Acknowledgement<object> ack = new Acknowledgement<object>("OK", "User was deleted.", null);
+            return Ok("User has been deleted.");
         }
     }
 }

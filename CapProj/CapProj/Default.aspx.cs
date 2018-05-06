@@ -2,9 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Newtonsoft.Json;
 
 namespace CapProj
 {
@@ -25,25 +29,29 @@ namespace CapProj
                 {"password", Password.Text }
             };
 
-            Acknowledgement<object> ack = await FoodAPI.Call<object>("api/user/login", pairs);
-
-
-            if (ack.status == "OK")
+            string json = JsonConvert.SerializeObject(pairs);
+            using (var client = new HttpClient())
             {
-                string json = ack.data.ToString();
-                var result = JObject.Parse(json)["session_token"];
+                var response = await client.PostAsync(
+                "http://localhost:50576/api/user/login",
+                new StringContent(json, Encoding.UTF8, "application/json"));
+                var contents = await response.Content.ReadAsStringAsync();
 
-                // FIXME : Need to ensure this actually saves cookie as intended.
-                // Generally must create cookies before page is rendered.
-                // This should take place after login before rendering of next page.
-                HttpCookie httpCookie = new HttpCookie("SessionInfo");
-                httpCookie["SessionToken"] = result.ToString();
-                Response.Cookies.Add(httpCookie);
-                Response.Redirect("/Success"); // FIXME: Direct to new page? Show login at top of screen?
-            }
-            else
-            {
-                Response.Redirect("/default"); // FIXME: Handle incorrect login better.
+                var session_token_def = new { session_token = "" };
+
+                if(response.StatusCode.ToString() == "OK")
+                {
+                    var ses_tok = JsonConvert.DeserializeAnonymousType(contents, session_token_def);
+                    HttpCookie httpCookie = new HttpCookie("SessionInfo");
+                    httpCookie["SessionToken"] = ses_tok.session_token;
+                    Response.Cookies.Add(httpCookie);
+                    Response.Redirect("/LoginSuccess");
+                }
+                else
+                {
+                    Response.Redirect("/UnabletoLogin");
+                }
+
             }
         }
 

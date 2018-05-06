@@ -1,0 +1,11 @@
+C:\Users\cassa\Documents\GitHub\SMS-Food-Service\FoodServiceAPI\FoodServiceAPI\bin\Debug\netcoreapp2.0\FoodServiceAPI.deps.json
+C:\Users\cassa\Documents\GitHub\SMS-Food-Service\FoodServiceAPI\FoodServiceAPI\bin\Debug\netcoreapp2.0\FoodServiceAPI.runtimeconfig.json
+C:\Users\cassa\Documents\GitHub\SMS-Food-Service\FoodServiceAPI\FoodServiceAPI\bin\Debug\netcoreapp2.0\FoodServiceAPI.runtimeconfig.dev.json
+C:\Users\cassa\Documents\GitHub\SMS-Food-Service\FoodServiceAPI\FoodServiceAPI\bin\Debug\netcoreapp2.0\FoodServiceAPI.dll
+C:\Users\cassa\Documents\GitHub\SMS-Food-Service\FoodServiceAPI\FoodServiceAPI\bin\Debug\netcoreapp2.0\FoodServiceAPI.pdb
+C:\Users\cassa\Documents\GitHub\SMS-Food-Service\FoodServiceAPI\FoodServiceAPI\obj\Debug\netcoreapp2.0\FoodServiceAPI.csprojResolveAssemblyReference.cache
+C:\Users\cassa\Documents\GitHub\SMS-Food-Service\FoodServiceAPI\FoodServiceAPI\obj\Debug\netcoreapp2.0\FoodServiceAPI.csproj.CoreCompileInputs.cache
+C:\Users\cassa\Documents\GitHub\SMS-Food-Service\FoodServiceAPI\FoodServiceAPI\obj\Debug\netcoreapp2.0\FoodServiceAPI.AssemblyInfoInputs.cache
+C:\Users\cassa\Documents\GitHub\SMS-Food-Service\FoodServiceAPI\FoodServiceAPI\obj\Debug\netcoreapp2.0\FoodServiceAPI.AssemblyInfo.cs
+C:\Users\cassa\Documents\GitHub\SMS-Food-Service\FoodServiceAPI\FoodServiceAPI\obj\Debug\netcoreapp2.0\FoodServiceAPI.dll
+C:\Users\cassa\Documents\GitHub\SMS-Food-Service\FoodServiceAPI\FoodServiceAPI\obj\Debug\netcoreapp2.0\FoodServiceAPI.pdb
