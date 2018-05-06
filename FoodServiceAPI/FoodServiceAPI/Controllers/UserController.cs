@@ -50,6 +50,7 @@ namespace FoodServiceAPI.Controllers
             public string email { get; set; }
             public string address { get; set; }
             public string zip { get; set; }
+            public string user_type { get; set; }
 
             public UserInfo(UserData user)
             {
@@ -57,6 +58,7 @@ namespace FoodServiceAPI.Controllers
                 email = user.email;
                 address = user.address;
                 zip = user.zip;
+                user_type = null;
             }
         }
 
@@ -68,6 +70,7 @@ namespace FoodServiceAPI.Controllers
 
             public ClientInfo(Client client) : base(client.User)
             {
+                user_type = "client";
                 first_name = client.first_name;
                 last_name = client.last_name;
                 cell_phone = client.cell_phone;
@@ -82,10 +85,16 @@ namespace FoodServiceAPI.Controllers
 
             public BusinessInfo(Business business) : base(business.User)
             {
+                user_type = "business";
                 name = business.name;
                 work_phone = business.work_phone;
                 instructions = business.instructions;
             }
+        }
+
+        public class UserTypeInfo
+        {
+            public string user_type { get; set; }
         }
 
         public class LoginReturn
@@ -255,6 +264,27 @@ namespace FoodServiceAPI.Controllers
                 //Acknowledgement<object> ack = new Acknowledgement<object>("OTHER", "Function does not support this user type", null);
                 return BadRequest("Function does not support this type of user.");
             }
+        }
+
+        [Route("getusertype")]
+        [HttpPost]
+        [Authorize("Session")]
+        public JsonResult GetUserType()
+        {
+            UserTypeInfo type = new UserTypeInfo();
+
+            if(User.FindFirstValue("cid") != null)
+                type.user_type = "client";
+            else if(User.FindFirstValue("bid") != null)
+                type.user_type = "business";
+            else
+            {
+                Acknowledgement<object> errAck = new Acknowledgement<object>("OTHER", "Corrupted user", null);
+                return Json(errAck);
+            }
+
+            Acknowledgement<UserTypeInfo> ack = new Acknowledgement<UserTypeInfo>("OK", "Got user type", type);
+            return Json(ack);
         }
 
         [Route("logoutall")]

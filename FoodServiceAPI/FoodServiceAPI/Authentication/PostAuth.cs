@@ -85,6 +85,9 @@ namespace FoodServiceAPI.Authentication
                 }
             ).FirstOrDefaultAsync();
 
+            if(user == null)
+                return AuthenticateResult.Fail("no such user");
+
             // Check password
             PasswordProtector protector = new PasswordProtector();
 
