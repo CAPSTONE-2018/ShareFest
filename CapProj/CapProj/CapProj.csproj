@@ -131,6 +131,7 @@
     <Content Include="Content\_bootswatch.scss" />
     <Content Include="Content\_variable.scss" />
     <Content Include="LoginSuccess.aspx" />
+    <Content Include="PWUpdateSuccess.aspx" />
     <Content Include="UnabletoCreateAccount.aspx" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Login.aspx" />
@@ -169,6 +170,7 @@
     <Content Include="Site.Master" />
     <Content Include="Success.aspx" />
     <Content Include="UnabletoLogin.aspx" />
+    <Content Include="UnabletoUpdatePW.aspx" />
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="Web.config" />
     <Content Include="Bundle.config" />
@@ -240,6 +242,13 @@
       <DependentUpon>LoginSuccess.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PWUpdateSuccess.aspx.cs">
+      <DependentUpon>PWUpdateSuccess.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="PWUpdateSuccess.aspx.designer.cs">
+      <DependentUpon>PWUpdateSuccess.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -267,6 +276,13 @@
     </Compile>
     <Compile Include="UnabletoLogin.aspx.designer.cs">
       <DependentUpon>UnabletoLogin.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="UnabletoUpdatePW.aspx.cs">
+      <DependentUpon>UnabletoUpdatePW.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UnabletoUpdatePW.aspx.designer.cs">
+      <DependentUpon>UnabletoUpdatePW.aspx</DependentUpon>
     </Compile>
     <Compile Include="ViewSwitcher.ascx.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
