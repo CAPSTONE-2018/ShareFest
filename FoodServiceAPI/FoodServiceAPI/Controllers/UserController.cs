@@ -269,7 +269,7 @@ namespace FoodServiceAPI.Controllers
         [Route("getusertype")]
         [HttpPost]
         [Authorize("Session")]
-        public JsonResult GetUserType()
+        public IActionResult GetUserType()
         {
             UserTypeInfo type = new UserTypeInfo();
 
@@ -278,13 +278,9 @@ namespace FoodServiceAPI.Controllers
             else if(User.FindFirstValue("bid") != null)
                 type.user_type = "business";
             else
-            {
-                Acknowledgement<object> errAck = new Acknowledgement<object>("OTHER", "Corrupted user", null);
-                return Json(errAck);
-            }
+                return BadRequest("Function does not support this type of user.");
 
-            Acknowledgement<UserTypeInfo> ack = new Acknowledgement<UserTypeInfo>("OK", "Got user type", type);
-            return Json(ack);
+            return Ok(type);
         }
 
         [Route("logoutall")]

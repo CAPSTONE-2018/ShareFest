@@ -64,14 +64,14 @@ public class BusinessAccountActivity extends AppCompatActivity {
             {
                 try
                 {
-                    JSONObject data = result.jsonObj.getJSONObject("data");
+                    JSONObject info = result.jsonObj;
 
-                    BusinessUsername.setText(data.getString("username"));
-                    BusinessName.setText(data.getString("name"));
-                    BusinessAddress.setText(data.getString("address"));
-                    BusinessPhone.setText(data.getString("work_phone"));
-                    BusinessEmail.setText(data.getString("email"));
-                    BusinessZip.setText(data.getString("zip"));
+                    BusinessUsername.setText(info.getString("username"));
+                    BusinessName.setText(info.getString("name"));
+                    BusinessAddress.setText(info.getString("address"));
+                    BusinessPhone.setText(info.getString("work_phone"));
+                    BusinessEmail.setText(info.getString("email"));
+                    BusinessZip.setText(info.getString("zip"));
                 } catch (org.json.JSONException e)
                 {
                     Log.d("exception", e.getLocalizedMessage());

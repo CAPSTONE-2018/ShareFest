@@ -90,9 +90,7 @@ public class LoginActivity extends AppCompatActivity {
         public void onPostExecute(HttpPostCallbackResult result) {
             if(result.statusCode == 200) {
                 try {
-                    JSONObject data = result.jsonObj.getJSONObject("data");
-                    String token = data.getString("session_token");
-
+                    String token = result.jsonObj.getString("session_token");
                     SharedPreferences session = getSharedPreferences("food_service_session", MODE_PRIVATE);
                     SharedPreferences.Editor sesEdit = session.edit();
                     sesEdit.putString("token", token);
@@ -125,9 +123,7 @@ public class LoginActivity extends AppCompatActivity {
         public void onPostExecute(HttpPostCallbackResult result) {
             if(result.statusCode == 200) {
                 try {
-                    JSONObject data = result.jsonObj.getJSONObject("data");
-                    String userType = data.getString("user_type");
-
+                    String userType = result.jsonObj.getString("user_type");
                     SharedPreferences session = getSharedPreferences("food_service_session", MODE_PRIVATE);
                     SharedPreferences.Editor sesEdit = session.edit();
                     sesEdit.putString("user_type", userType);
