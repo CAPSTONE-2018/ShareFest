@@ -174,14 +174,12 @@ namespace FoodServiceAPI.Controllers
             }
             else
             {
-                Acknowledgement<object> invalid_user_ack = new Acknowledgement<object>("INVALID_USER_TYPE", "User type must be specified as business or client", null);
-                return Json(invalid_user_ack); 
+                return BadRequest(new ResultBody("Invalid user type.")); 
             }
 
             await dbContext.SaveChangesAsync();
 
-            //Acknowledgement<object> ack = new Acknowledgement<object>("OK", "Successfully created new user", null);
-            return Ok("Successfully created new user"); 
+            return Ok(new ResultBody("Successfully created new user")); 
         }
 
         [Route("login")]
@@ -223,7 +221,6 @@ namespace FoodServiceAPI.Controllers
                 session_token = new JwtSecurityTokenHandler().WriteToken(token)
             };
 
-            //Acknowledgement<LoginReturn> ack = new Acknowledgement<LoginReturn>("OK", "Token succesfully created", ret);
             return Ok(ret);
         }
 
@@ -236,8 +233,7 @@ namespace FoodServiceAPI.Controllers
             dbContext.Sessions.Remove(session);
             await dbContext.SaveChangesAsync();
 
-            //Acknowledgement<object> ack = new Acknowledgement<object>("OK", "User logout was a success", null);
-            return Ok("Log out was a success.");
+            return Ok(new ResultBody("Log out was a success."));
         }
 
         [Route("getinfo")]
@@ -251,18 +247,15 @@ namespace FoodServiceAPI.Controllers
             
             if (user.Client != null)
             {
-                //Acknowledgement<ClientInfo> ack = new Acknowledgement<ClientInfo>("OK", "Request for user info success,", new ClientInfo(user.Client));
-                return Ok(new ClientInfo(user.Client));
+               return Ok(new ClientInfo(user.Client));
             }
             else if (user.Business != null)
             {
-                //Acknowledgement<BusinessInfo> ack = new Acknowledgement<BusinessInfo>("OK", "Request for business info success.", new BusinessInfo(user.Business));
                 return Ok(new BusinessInfo(user.Business));
             }
             else
             {
-                //Acknowledgement<object> ack = new Acknowledgement<object>("OTHER", "Function does not support this user type", null);
-                return BadRequest("Function does not support this type of user.");
+                return BadRequest(new ResultBody("Function does not support this type of user."));
             }
         }
 
@@ -278,7 +271,7 @@ namespace FoodServiceAPI.Controllers
             else if(User.FindFirstValue("bid") != null)
                 type.user_type = "business";
             else
-                return BadRequest("Function does not support this type of user.");
+                return BadRequest(new ResultBody("Function does not support this type of user."));
 
             return Ok(type);
         }
@@ -293,8 +286,7 @@ namespace FoodServiceAPI.Controllers
             dbContext.Sessions.RemoveRange(sessions);
             await dbContext.SaveChangesAsync();
 
-            //Acknowledgement<object> ack = new Acknowledgement<object>("OK", "Successfully logged out of all sessions.", null);
-            return Ok("Successfully logged out of all sessions.");
+            return Ok(new ResultBody("Successfully logged out of all sessions."));
         }
 
         [Route("setinfo")]
@@ -319,8 +311,7 @@ namespace FoodServiceAPI.Controllers
                 user.Client.cell_phone = updated.cell_phone;
                 await dbContext.SaveChangesAsync();
 
-                //Acknowledgement<object> ack = new Acknowledgement<object>("OK", "Client info sucessfully updated.", null);
-                return Ok("Client info updated.");
+                return Ok(new ResultBody("Client info updated."));
             }
             else if (user.Business != null)
             {
@@ -329,13 +320,11 @@ namespace FoodServiceAPI.Controllers
                 user.Business.instructions = updated.instructions;
                 await dbContext.SaveChangesAsync();
 
-                //Acknowledgement<object> ack = new Acknowledgement<object>("OK", "Business info successfully updated.", null);
-                return Ok("Business info updated.");
+                return Ok(new ResultBody("Business info updated."));
             }
             else
             {
-                //Acknowledgement<object> ack = new Acknowledgement<object>("INVALID_USER_TYPE", "Invalid user type specified or no user type specified.", null);
-                return BadRequest("User type was invalid.");
+                return BadRequest(new ResultBody("User type was invalid."));
             }
         }
 
@@ -352,8 +341,7 @@ namespace FoodServiceAPI.Controllers
             dbContext.Users.Update(userData);
             await dbContext.SaveChangesAsync();
 
-            return Ok("Password has been reset.");
-            //return Json(new Acknowledgement<object>("OK", "Password set successful.", null));
+            return Ok(new ResultBody("Password has been reset."));
         }
 
         [Route("delete")]
@@ -371,8 +359,7 @@ namespace FoodServiceAPI.Controllers
             dbContext.Users.Remove(userData);
             await dbContext.SaveChangesAsync();
 
-            //Acknowledgement<object> ack = new Acknowledgement<object>("OK", "User was deleted.", null);
-            return Ok("User has been deleted.");
+            return Ok(new ResultBody("User deleted successfully."));
         }
     }
 }

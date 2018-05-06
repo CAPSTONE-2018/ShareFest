@@ -41,7 +41,7 @@
 
  <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <asp:Button runat="server" ID ="Register" OnClick ="ChangePWButtonClick" Text="Register" CssClass="btn btn-default" />
+                <asp:Button runat="server" ID ="Register" OnClick ="ChangePWButtonClick" Text="Update" CssClass="btn btn-default" />
             </div>
         </div> 
 </asp:Content>

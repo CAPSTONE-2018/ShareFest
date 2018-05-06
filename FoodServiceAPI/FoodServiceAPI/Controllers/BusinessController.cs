@@ -41,16 +41,14 @@ namespace FoodServiceAPI.Controllers
         [Route("getbusiness")]
         [HttpPost]
         [AllowAnonymous]
-        public async Task<JsonResult> GetBusiness([FromBody]BusinessIdentifier businessID)
+        public async Task<IActionResult> GetBusiness([FromBody]BusinessIdentifier businessID)
         {
             Business business = await dbContext.Businesses.Include(b => b.User).FirstOrDefaultAsync(b => b.bid == businessID.bid);
 
             if(business == null)
-                return Json(new Acknowledgement<object>("INVALID_BID", "No business with given ID", null));
+                return BadRequest(new ResultBody("No business with given ID"));
 
-            return Json(new Acknowledgement<BusinessInfo>(
-                "OK",
-                "Retrieved business info",
+            return Ok(
                 new BusinessInfo
                 {
                     email = business.User.email,
@@ -60,7 +58,7 @@ namespace FoodServiceAPI.Controllers
                     work_phone = business.work_phone,
                     instructions = business.instructions
                 }
-            ));
+            );
         }
     }
 }

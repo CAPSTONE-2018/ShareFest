@@ -94,7 +94,7 @@ namespace FoodServiceAPI.Controllers
         [Route("getpackages")]
         [HttpPost]
         [Authorize("Session")]
-        public async Task<JsonResult> GetPackages([FromBody]PackageRetrievalOptions options)
+        public async Task<IActionResult> GetPackages([FromBody]PackageRetrievalOptions options)
         {
             PackageResult result = new PackageResult();
 
@@ -130,16 +130,16 @@ namespace FoodServiceAPI.Controllers
                 result.packages = await query.ToListAsync();
             }
             else
-                return Json(new Acknowledgement<object>("OTHER", "Function does not support this user type", null));
+                return BadRequest(new ResultBody("Function does not support this user type."));
 
-            return Json(new Acknowledgement<PackageResult>("OK", "Retrieved packages", result));
+            return Ok(result);
         }
 
         [Route("createpackage")]
         [HttpPost]
         [Authorize("Session")]
         [Authorize("Business")]
-        public async Task<JsonResult> CreatePackage([FromBody]PackageDesign design)
+        public async Task<IActionResult> CreatePackage([FromBody]PackageDesign design)
         {
             int bid = Convert.ToInt32(User.FindFirstValue("bid"));
 
@@ -158,32 +158,32 @@ namespace FoodServiceAPI.Controllers
             await dbContext.SaveChangesAsync();
             StartPackageNotification(package);
 
-            return Json(new Acknowledgement<object>("OK", "Created package", null));
+            return Ok(new ResultBody("Package created."));
         }
 
         [Route("deletepackage")]
         [HttpPost]
         [Authorize("Session")]
         [Authorize("Business")]
-        public async Task<JsonResult> DeletePackage([FromBody]PackageIdentifier identifier)
+        public async Task<IActionResult> DeletePackage([FromBody]PackageIdentifier identifier)
         {
             // FIXME: Should businesses be able to delete claimed or received packages?
             int bid = Convert.ToInt32(User.FindFirstValue("bid"));
             Package package = await dbContext.Packages.FirstOrDefaultAsync(p => p.pid == identifier.pid && p.owner_bid == bid);
 
             if (package == null)
-                return Json(new Acknowledgement<object>("INVALID_PID", "No such package owned by this business", null));
+                return BadRequest(new ResultBody("No such package owned by this business"));
 
             dbContext.Packages.Remove(package);
             await dbContext.SaveChangesAsync();
 
-            return Json(new Acknowledgement<object>("OK", "Package deleted", null));
+            return Ok(new ResultBody("Package has been deleted."));
         }
 
         [Route("claim")]
         [HttpPost]
         [Authorize("Session")]
-        public async Task<JsonResult> ClaimPackage([FromBody]PackageClaimOptions options)
+        public async Task<IActionResult> ClaimPackage([FromBody]PackageClaimOptions options)
         {
             int? claimerCID = null;
             Package package;
@@ -195,7 +195,7 @@ namespace FoodServiceAPI.Controllers
                 package = await dbContext.Packages.FindAsync(options.pid);
 
                 if(package == null || package.owner_bid != bid || package.claimer_cid == null || package.received != null)
-                    return Json(new Acknowledgement<object>("INVALID_PID", "No such package owned by this business and possible to unclaim", null));
+                    return BadRequest(new ResultBody("No such package owned by this business and possible to unclaim"));
             }
             else if(User.FindFirst("cid") != null)
             {
@@ -220,10 +220,10 @@ namespace FoodServiceAPI.Controllers
                 }
 
                 if(package == null)
-                    return Json(new Acknowledgement<object>("INVALID_PID", "No such package available to this client for this operation", null));
+                    return BadRequest(new ResultBody("No such package available to this client for this operation"));
             }
             else
-                return Json(new Acknowledgement<object>("OTHER", "Function does not support this user type", null));
+                return BadRequest(new ResultBody("Function does not support this user type"));
 
             package.claimer_cid = claimerCID;
 
@@ -244,28 +244,24 @@ namespace FoodServiceAPI.Controllers
                 await dbContext.SaveChangesAsync();
             }
 
-            return Json(new Acknowledgement<object>(
-                "OK",
-                claimerCID == null ? "Unclaimed package" : "Claimed package",
-                null
-            ));
+            return Ok(new ResultBody(claimerCID == null ? "Unclaimed package" : "Claimed package"));
         }
 
         [Route("markreceived")]
         [HttpPost]
         [Authorize("Session")]
         [Authorize("Business")]
-        public async Task<JsonResult> MarkReceived([FromBody]PackageIdentifier identifier)
+        public async Task<IActionResult> MarkReceived([FromBody]PackageIdentifier identifier)
         {
             int bid = Convert.ToInt32(User.FindFirstValue("bid"));
             Package package = await dbContext.Packages.FindAsync(identifier.pid);
 
             if (package == null || package.owner_bid != bid || package.claimer_cid == null || package.received != null)
-                return Json(new Acknowledgement<object>("INVALID_PID", "No such claimed and unreceived package owned by this business", null));
+                return BadRequest(new ResultBody("No such claimed and unreceived package owned by this business"));
 
             package.received = DateTime.UtcNow;
             await dbContext.SaveChangesAsync();
-            return Json(new Acknowledgement<object>("OK", "Marked package as received", null));
+            return Ok(new ResultBody("Marked package as received"));
         }
 
         public void StartPackageNotification(Package package)
