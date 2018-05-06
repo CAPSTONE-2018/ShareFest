@@ -1,6 +1,9 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -29,16 +32,21 @@ namespace CapProj
                 {"instructions", Special.Text }
             };
 
-            Acknowledgement<object> ack = await FoodAPI.Call<object>("api/user/register", pairs);
+            string json = JsonConvert.SerializeObject(pairs);
+            using (var client = new HttpClient())
+            {
+                var response = await client.PostAsync(
+                "http://localhost:50576/api/user/register",
+                new StringContent(json, Encoding.UTF8, "application/json"));
 
-            if (ack.status == "OK")
-            {
-                Response.Redirect("/Success");
-            }
-            else
-            {
-                Response.Redirect("/Success");
-                // FIX ME : Error handle
+                if (response.StatusCode.ToString() == "OK")
+                {
+                    Response.Redirect("/Success");
+                }
+                else
+                {
+                    Response.Redirect("/UnabletoCreateAccount");
+                }
             }
         }
     }
