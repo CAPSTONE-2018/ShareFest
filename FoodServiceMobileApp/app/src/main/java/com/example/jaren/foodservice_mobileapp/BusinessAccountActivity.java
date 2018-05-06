@@ -18,7 +18,6 @@ public class BusinessAccountActivity extends AppCompatActivity {
 
     private Button Menu;
     private TextView BusinessUsername;
-    private TextView BusinessPassword; // FIXME: remove
     private TextView BusinessEmail;
     private TextView BusinessAddress;
     private TextView BusinessZip;
@@ -39,7 +38,6 @@ public class BusinessAccountActivity extends AppCompatActivity {
         BusinessAddress = (TextView) findViewById(R.id.tvBusinessAddress);
         BusinessPhone = (TextView) findViewById(R.id.tvBusinessPhone);
         BusinessEmail = (TextView) findViewById(R.id.tvBusinessEmail);
-        BusinessPassword = (TextView) findViewById(R.id.tvBusinessPassword);
         BusinessZip = (TextView) findViewById(R.id.tvBusinessZip);
 
         Menu.setOnClickListener(new View.OnClickListener() {
