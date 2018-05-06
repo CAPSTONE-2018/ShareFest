@@ -1,8 +1,30 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="EditAccountSettings.aspx.cs" Inherits="CapProj.EditAccountSettings" %>
+﻿<%@ Page Async="true" Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="EditAccountSettings.aspx.cs" Inherits="CapProj.EditAccountSettings" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
 <h4>Edit Account Settings</h4>
 
+
+<div class="form-group">
+    <hr />
+    <asp:Label runat="server" AssociatedControlID="CurrentUsername" CssClass="col-md-2 control-label">Current Username</asp:Label>
+    
+    <div class="col-md-10">
+        <asp:TextBox runat="server" ID="CurrentUsername" CssClass="form-control" TextMode="SingleLine" />
+        <asp:RequiredFieldValidator runat="server" ControlToValidate="CurrentUsername"
+           CssClass="text-danger" ErrorMessage="This field is required." />
+    </div>
+</div>
+
+<div class="form-group">
+    <hr />
+    <asp:Label runat="server" AssociatedControlID="CurrentPassword" CssClass="col-md-2 control-label">Current Password</asp:Label>
+    
+    <div class="col-md-10">
+        <asp:TextBox runat="server" ID="CurrentPassword" CssClass="form-control" TextMode="SingleLine" />
+        <asp:RequiredFieldValidator runat="server" ControlToValidate="CurrentPassword"
+           CssClass="text-danger" ErrorMessage="This field is required." />
+    </div>
+</div>
 <div class="form-group">
     <hr />
     <asp:Label runat="server" AssociatedControlID="FirstName" CssClass="col-md-2 control-label">First Name</asp:Label>
@@ -25,11 +47,11 @@
 </div>
 
 <div class="form-group">
-    <asp:Label runat="server" AssociatedControlID="Username" CssClass="col-md-2 control-label">Username</asp:Label>
+    <asp:Label runat="server" AssociatedControlID="NewUsername" CssClass="col-md-2 control-label">New Username</asp:Label>
     
     <div class="col-md-10">
-        <asp:TextBox runat="server" ID="Username" CssClass="form-control" TextMode="SingleLine" />
-        <asp:RequiredFieldValidator runat="server" ControlToValidate="Username"
+        <asp:TextBox runat="server" ID="NewUsername" CssClass="form-control" TextMode="SingleLine" />
+        <asp:RequiredFieldValidator runat="server" ControlToValidate="NewUsername"
            CssClass="text-danger" ErrorMessage="This field is required." />
     </div>
 </div>
@@ -76,13 +98,12 @@
 
 <a type="button" class="btn btn-primary" href="ChangePassword">Change Password Here</a>
 
-<%--- Here you will have to change the button function to go to whatever SetUserInfo function you end up implementing
 
 <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <asp:Button runat="server" ID="Register" OnClick="RegisterBtn_Click" Text="Register" CssClass="btn btn-default" />
+                <asp:Button runat="server" ID="UpdateButton" OnClick="EditButtonClick" Text="Update Now" CssClass="btn btn-default" />
             </div>
-</div>   --%>
+</div>  
 
 
 </asp:Content>

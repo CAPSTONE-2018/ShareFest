@@ -130,6 +130,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\_bootswatch.scss" />
     <Content Include="Content\_variable.scss" />
+    <Content Include="InfoUpdateSuccess.aspx" />
     <Content Include="LoginSuccess.aspx" />
     <Content Include="PWUpdateSuccess.aspx" />
     <Content Include="UnabletoCreateAccount.aspx" />
@@ -170,6 +171,7 @@
     <Content Include="Site.Master" />
     <Content Include="Success.aspx" />
     <Content Include="UnabletoLogin.aspx" />
+    <Content Include="UnableToUpdateInfo.aspx" />
     <Content Include="UnabletoUpdatePW.aspx" />
     <Content Include="ViewSwitcher.ascx" />
     <Content Include="Web.config" />
@@ -227,6 +229,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="InfoUpdateSuccess.aspx.cs">
+      <DependentUpon>InfoUpdateSuccess.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="InfoUpdateSuccess.aspx.designer.cs">
+      <DependentUpon>InfoUpdateSuccess.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -276,6 +285,13 @@
     </Compile>
     <Compile Include="UnabletoLogin.aspx.designer.cs">
       <DependentUpon>UnabletoLogin.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="UnableToUpdateInfo.aspx.cs">
+      <DependentUpon>UnableToUpdateInfo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UnableToUpdateInfo.aspx.designer.cs">
+      <DependentUpon>UnableToUpdateInfo.aspx</DependentUpon>
     </Compile>
     <Compile Include="UnabletoUpdatePW.aspx.cs">
       <DependentUpon>UnabletoUpdatePW.aspx</DependentUpon>

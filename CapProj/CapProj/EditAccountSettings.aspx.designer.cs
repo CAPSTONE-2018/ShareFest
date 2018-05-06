@@ -13,6 +13,24 @@ namespace CapProj {
     public partial class EditAccountSettings {
         
         /// <summary>
+        /// CurrentUsername control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox CurrentUsername;
+        
+        /// <summary>
+        /// CurrentPassword control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox CurrentPassword;
+        
+        /// <summary>
         /// FirstName control.
         /// </summary>
         /// <remarks>
@@ -31,13 +49,13 @@ namespace CapProj {
         protected global::System.Web.UI.WebControls.TextBox LastName;
         
         /// <summary>
-        /// Username control.
+        /// NewUsername control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox Username;
+        protected global::System.Web.UI.WebControls.TextBox NewUsername;
         
         /// <summary>
         /// Email control.
@@ -74,5 +92,14 @@ namespace CapProj {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox Phone;
+        
+        /// <summary>
+        /// UpdateButton control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button UpdateButton;
     }
 }
