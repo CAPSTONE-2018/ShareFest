@@ -11,7 +11,6 @@ public class ClientAccountActivity extends AppCompatActivity {
 
     private Button Menu;
     private TextView ClientUsername;
-    private TextView ClientPassword;
     private TextView ClientEmail;
     private TextView ClientAddress;
     private TextView ClientZip;
@@ -32,7 +31,6 @@ public class ClientAccountActivity extends AppCompatActivity {
         ClientAddress = (TextView) findViewById(R.id.tvClientAddress);
         ClientPhone = (TextView) findViewById(R.id.tvClientPhone);
         ClientEmail = (TextView) findViewById(R.id.tvClientEmail);
-        ClientPassword = (TextView) findViewById(R.id.tvClientPassword);
         ClientZip = (TextView) findViewById(R.id.tvClientZip);
 
         SampleValues();
@@ -53,7 +51,6 @@ public class ClientAccountActivity extends AppCompatActivity {
         ClientAddress.setText("123 Sample Lane");
         ClientPhone.setText("(555)630-5555");
         ClientEmail.setText("johnsmith@sample.com");
-        ClientPassword.setText("password123");
         ClientZip.setText("60504");
     }
 }
