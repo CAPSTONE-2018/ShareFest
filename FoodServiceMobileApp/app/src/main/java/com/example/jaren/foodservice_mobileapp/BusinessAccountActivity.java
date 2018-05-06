@@ -1,23 +1,31 @@
 package com.example.jaren.foodservice_mobileapp;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.util.Log;
+
+import java.util.HashMap;
+import java.util.Map;
+import org.json.JSONObject;
 
 public class BusinessAccountActivity extends AppCompatActivity {
 
 
     private Button Menu;
     private TextView BusinessUsername;
-    private TextView BusinessPassword;
+    private TextView BusinessPassword; // FIXME: remove
     private TextView BusinessEmail;
     private TextView BusinessAddress;
     private TextView BusinessZip;
     private TextView BusinessName;
     private TextView BusinessPhone;
+
+    private String urlUserInfo = "http://10.0.2.2:50576/api/user/getinfo";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,8 +42,6 @@ public class BusinessAccountActivity extends AppCompatActivity {
         BusinessPassword = (TextView) findViewById(R.id.tvBusinessPassword);
         BusinessZip = (TextView) findViewById(R.id.tvBusinessZip);
 
-        SampleValues();
-
         Menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -43,15 +49,43 @@ public class BusinessAccountActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
+        Map<String, String> params = new HashMap<>();
+        SharedPreferences session = getSharedPreferences("food_service_session", MODE_PRIVATE);
+        String token = session.getString("token", "");
+        HttpPostAsyncTask request = new HttpPostAsyncTask(params, new InfoCallback(), token);
+        request.execute(urlUserInfo);
     }
 
-    public void SampleValues(){
-        BusinessUsername.setText("jewelosco1");
-        BusinessName.setText("Jewel Osco");
-        BusinessAddress.setText("123 Sample Lane");
-        BusinessPhone.setText("(555)630-5555");
-        BusinessEmail.setText("jewelosco@sample.com");
-        BusinessPassword.setText("password123");
-        BusinessZip.setText("60504");
+    private class InfoCallback implements HttpPostAsyncTask.Callback
+    {
+        public void onPostExecute(HttpPostCallbackResult result) {
+            if(result.statusCode == 200)
+            {
+                try
+                {
+                    JSONObject data = result.jsonObj.getJSONObject("data");
+
+                    BusinessUsername.setText(data.getString("username"));
+                    BusinessName.setText(data.getString("name"));
+                    BusinessAddress.setText(data.getString("address"));
+                    BusinessPhone.setText(data.getString("work_phone"));
+                    BusinessEmail.setText(data.getString("email"));
+                    BusinessZip.setText(data.getString("zip"));
+                } catch (org.json.JSONException e)
+                {
+                    Log.d("exception", e.getLocalizedMessage());
+                    // FIXME: implement invalid-response action
+                }
+            }
+            else if(result.statusCode == 401)
+            {
+                // FIXME: implement unauthorized action (bad/expired session token)
+            }
+            else if(result. statusCode == 403)
+            {
+                // FIXME: implement forbidden action (session is OK, user is not allowed)
+            }
+        }
     }
 }

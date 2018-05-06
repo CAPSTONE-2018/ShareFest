@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,7 +18,6 @@ public class RegisterBusinessActivity extends AppCompatActivity {
 public static final int CONNECTION_TIMEOUT = 10000; //10seconds
 public static final int READ_TIMEOUT = 15000; // 15seconds
 
-private URL url;
 private Button BusinessRegister;
 private Button BusinessLogin;
 private EditText BusinessName;

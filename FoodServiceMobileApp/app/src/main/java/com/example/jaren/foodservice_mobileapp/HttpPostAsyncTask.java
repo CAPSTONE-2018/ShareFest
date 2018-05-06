@@ -22,7 +22,7 @@ import static android.content.ContentValues.TAG;
 
 class HttpPostCallbackResult
 {
-    public int statusCode;
+    public int statusCode; // HTTP response status code, or 0 if request/response didn't happen
     public JSONObject jsonObj;
 
     public HttpPostCallbackResult(int statusCode, JSONObject jsonObj){
@@ -34,6 +34,7 @@ class HttpPostCallbackResult
 public class HttpPostAsyncTask extends AsyncTask<String, Void, HttpPostCallbackResult>{
     JSONObject postData;
     Callback callback;
+    String sessionToken;
 
     public interface Callback {
         void onPostExecute(HttpPostCallbackResult result);
@@ -47,6 +48,11 @@ public class HttpPostAsyncTask extends AsyncTask<String, Void, HttpPostCallbackR
         this.callback = callback;
     }
 
+    public HttpPostAsyncTask(Map<String, String> postData, Callback callback, String sessionToken) {
+        this(postData, callback);
+        this.sessionToken = sessionToken;
+    }
+
     @Override
     protected HttpPostCallbackResult doInBackground(String... params) {
         try {
@@ -57,6 +63,10 @@ public class HttpPostAsyncTask extends AsyncTask<String, Void, HttpPostCallbackR
             urlConnection.setDoOutput(true);
             urlConnection.setRequestProperty("Content-Type", "application/json; charset=utf-8");
             urlConnection.setRequestMethod("POST");
+
+            if(sessionToken != null) {
+                urlConnection.setRequestProperty("Authorization", "Bearer " + sessionToken);
+            }
 
             if (this.postData != null){
                 OutputStream os = urlConnection.getOutputStream();
@@ -82,7 +92,7 @@ public class HttpPostAsyncTask extends AsyncTask<String, Void, HttpPostCallbackR
             Log.d("exception", e.getLocalizedMessage());
         }
 
-        return null;
+        return new HttpPostCallbackResult(0, null);
     }
 
     @Override
