@@ -7,112 +7,172 @@
     tools:context=".BusinessCreatePackageActivity">
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/tvPackageExpiry"
         android:layout_width="146dp"
         android:layout_height="46dp"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="349dp" />
+        android:layout_marginBottom="152dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:text="Expiry Date"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/etPackageExpiry"
+        app:layout_constraintHorizontal_bias="0.296"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/tvPackagePrice"
         android:layout_width="146dp"
         android:layout_height="46dp"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="282dp" />
+        android:layout_marginBottom="24dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="16dp"
+        android:text="Price"
+        app:layout_constraintBottom_toTopOf="@+id/tvPackageExpiry"
+        app:layout_constraintEnd_toStartOf="@+id/etPackagePrice"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/textView8"
+        android:id="@+id/tvPackageQuantity"
         android:layout_width="146dp"
         android:layout_height="46dp"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="216dp" />
+        android:layout_marginBottom="24dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:text="Quantity"
+        app:layout_constraintBottom_toTopOf="@+id/tvPackagePrice"
+        app:layout_constraintEnd_toStartOf="@+id/etPackageQuantity"
+        app:layout_constraintHorizontal_bias="0.296"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/textView9"
+        android:id="@+id/tvPackageDescription"
         android:layout_width="146dp"
         android:layout_height="46dp"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="160dp" />
+        android:layout_marginBottom="24dp"
+        android:layout_marginStart="16dp"
+        android:text="Description"
+        app:layout_constraintBottom_toTopOf="@+id/tvPackageQuantity"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/etPackagePrice"
         android:layout_width="163dp"
         android:layout_height="46dp"
+        android:layout_marginBottom="24dp"
+        android:layout_marginEnd="8dp"
         android:ems="10"
-        android:inputType="textPersonName"
-        tools:layout_editor_absoluteX="181dp"
-        tools:layout_editor_absoluteY="282dp" />
+        android:inputType="numberDecimal"
+        app:layout_constraintBottom_toTopOf="@+id/etPackageExpiry"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <EditText
-        android:id="@+id/editText4"
+        android:id="@+id/etPackageQuantity"
         android:layout_width="163dp"
         android:layout_height="46dp"
+        android:layout_marginBottom="24dp"
+        android:layout_marginEnd="8dp"
         android:ems="10"
-        android:inputType="textPersonName"
-        tools:layout_editor_absoluteX="181dp"
-        tools:layout_editor_absoluteY="226dp" />
+        android:inputType="number"
+        app:layout_constraintBottom_toTopOf="@+id/etPackagePrice"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <EditText
-        android:id="@+id/editText5"
+        android:id="@+id/etPackageExpiry"
         android:layout_width="163dp"
         android:layout_height="46dp"
+        android:layout_marginBottom="168dp"
+        android:layout_marginEnd="8dp"
         android:ems="10"
-        android:inputType="textPersonName"
-        tools:layout_editor_absoluteX="181dp"
-        tools:layout_editor_absoluteY="340dp" />
+        android:inputType="datetime"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <EditText
-        android:id="@+id/editText3"
+        android:id="@+id/etPackageDescription"
         android:layout_width="163dp"
         android:layout_height="46dp"
+        android:layout_marginBottom="24dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="24dp"
         android:ems="10"
-        android:inputType="textPersonName"
-        tools:layout_editor_absoluteX="181dp"
-        tools:layout_editor_absoluteY="170dp" />
+        android:inputType="textMultiLine"
+        app:layout_constraintBottom_toTopOf="@+id/etPackageQuantity"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/tvPackageDescription" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btnMenu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button"
-        tools:layout_editor_absoluteX="204dp"
-        tools:layout_editor_absoluteY="482dp" />
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Menu"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnCreatePackage"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.908" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/btnCreatePackage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button"
-        tools:layout_editor_absoluteX="55dp"
-        tools:layout_editor_absoluteY="482dp" />
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="8dp"
+        android:text="Create"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.908" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/etPackageName"
         android:layout_width="163dp"
         android:layout_height="46dp"
+        android:layout_marginBottom="24dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
         android:ems="10"
         android:inputType="textPersonName"
-        tools:layout_editor_absoluteX="181dp"
-        tools:layout_editor_absoluteY="114dp" />
+        app:layout_constraintBottom_toTopOf="@+id/etPackageDescription"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/tvPackageName"
         android:layout_width="146dp"
         android:layout_height="46dp"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="114dp" />
+        android:layout_marginBottom="24dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Name"
+        app:layout_constraintBottom_toTopOf="@+id/tvPackageDescription"
+        app:layout_constraintEnd_toStartOf="@+id/etPackageName"
+        app:layout_constraintHorizontal_bias="0.296"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/tvCreatePackageLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:text="Create Package"
         android:textSize="24dp"
-        tools:layout_editor_absoluteX="96dp"
-        tools:layout_editor_absoluteY="28dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.038" />
 </android.support.constraint.ConstraintLayout>

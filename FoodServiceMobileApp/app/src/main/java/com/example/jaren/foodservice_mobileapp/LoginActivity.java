@@ -1,6 +1,5 @@
 package com.example.jaren.foodservice_mobileapp;
 
-import android.nfc.Tag;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.content.Intent;
@@ -13,7 +12,6 @@ import android.content.SharedPreferences;
 
 import java.util.HashMap;
 import java.util.Map;
-import org.json.JSONObject;
 
 public class LoginActivity extends AppCompatActivity {
     private EditText Name;
@@ -32,7 +30,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        Name = (EditText) findViewById(R.id.etName);
+        Name = (EditText) findViewById(R.id.etPackageName);
         Password = (EditText) findViewById(R.id.etBusinessUsername);
         Info = (TextView) findViewById(R.id.tvInfo);
         Login = (Button) findViewById(R.id.btnLogin);
