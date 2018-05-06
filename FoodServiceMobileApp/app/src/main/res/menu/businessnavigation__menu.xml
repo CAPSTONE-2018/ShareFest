@@ -10,6 +10,10 @@
         android:icon="@mipmap/ic_add_to_queue_black_24dp"
         android:title="Claimable Packages"/>
 
+    <item android:id="@+id/nav_businessmarkpackages"
+        android:icon="@mipmap/ic_add_to_queue_black_24dp"
+        android:title="Mark/Delete Packages"/>
+
     <item android:id="@+id/nav_businessaccount"
         android:icon="@mipmap/ic_account_box_black_24dp"
         android:title="My Account" />

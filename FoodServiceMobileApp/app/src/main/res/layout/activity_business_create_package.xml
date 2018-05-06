@@ -14,6 +14,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:text="Expiry Date"
+        android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/etPackageExpiry"
         app:layout_constraintHorizontal_bias="0.296"
@@ -27,6 +28,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="16dp"
         android:text="Price"
+        android:textSize="20dp"
         app:layout_constraintBottom_toTopOf="@+id/tvPackageExpiry"
         app:layout_constraintEnd_toStartOf="@+id/etPackagePrice"
         app:layout_constraintHorizontal_bias="0.0"
@@ -40,6 +42,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:text="Quantity"
+        android:textSize="20dp"
         app:layout_constraintBottom_toTopOf="@+id/tvPackagePrice"
         app:layout_constraintEnd_toStartOf="@+id/etPackageQuantity"
         app:layout_constraintHorizontal_bias="0.296"
@@ -53,7 +56,8 @@
         android:layout_marginStart="16dp"
         android:text="Description"
         app:layout_constraintBottom_toTopOf="@+id/tvPackageQuantity"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:textSize="20dp" />
 
     <EditText
         android:id="@+id/etPackagePrice"
@@ -153,6 +157,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="Name"
+        android:textSize="20dp"
         app:layout_constraintBottom_toTopOf="@+id/tvPackageDescription"
         app:layout_constraintEnd_toStartOf="@+id/etPackageName"
         app:layout_constraintHorizontal_bias="0.296"

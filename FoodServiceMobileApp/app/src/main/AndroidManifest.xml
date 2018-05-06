@@ -39,9 +39,8 @@
         <activity android:name=".RegisterBusinessActivity" />
         <activity android:name=".RegisterClientActivity" />
         <activity android:name=".BusinessClaimablePackagesActivity" />
-        <activity android:name=".ClientClaimPackageActivity"></activity>
-
-
+        <activity android:name=".ClientClaimPackageActivity" />
+        <activity android:name=".BusinessMarkPackagesActivity"></activity>
     </application>
 
 </manifest>
