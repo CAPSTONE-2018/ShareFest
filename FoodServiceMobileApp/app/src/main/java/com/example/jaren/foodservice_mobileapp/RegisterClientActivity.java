@@ -13,9 +13,6 @@ import java.util.Map;
 
 public class RegisterClientActivity extends AppCompatActivity {
 
-    public static final int CONNECTION_TIMEOUT = 10000; //10seconds
-    public static final int READ_TIMEOUT = 15000; // 15seconds
-
     private Button ClientRegister;
     private Button ClientLogin;
     private EditText ClientFirstName;
@@ -42,17 +39,6 @@ public class RegisterClientActivity extends AppCompatActivity {
     boolean paying = true;
 
     public String localhost = "http://10.0.2.2:50576/api/user/register";
-
-    private class RegisterCallback implements HttpPostAsyncTask.Callback {
-        public void onPostExecute(HttpPostCallbackResult result)
-        {
-            // FIXME: notify user of success/failure, redirect to login, etc.
-            if(result.statusCode == 200)
-                ClientUsername.setText("registered :^)");
-            else
-                ClientUsername.setText("fail: " + Integer.toString(result.statusCode));
-        }
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,7 +98,8 @@ public class RegisterClientActivity extends AppCompatActivity {
                 // This gives error passing 'paying' value as a boolean instead of string
                 postData.put("paying", "true");
 
-                HttpPostAsyncTask task = new HttpPostAsyncTask(postData, new RegisterCallback());
+                RegisterCallback callback = new RegisterCallback(RegisterClientActivity.this, ClientRegister);
+                HttpPostAsyncTask task = new HttpPostAsyncTask(postData, callback);
                 task.execute(localhost);
                 Log.d("RegisClientActivity", "sent");
             }

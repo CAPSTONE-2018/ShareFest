@@ -12,11 +12,7 @@ import android.widget.EditText;
 import java.util.HashMap;
 import java.util.Map;
 
-
 public class RegisterBusinessActivity extends AppCompatActivity {
-
-public static final int CONNECTION_TIMEOUT = 10000; //10seconds
-public static final int READ_TIMEOUT = 15000; // 15seconds
 
 private Button BusinessRegister;
 private Button BusinessLogin;
@@ -41,17 +37,6 @@ private String work_phone;
 private String instructions;
 
 public String localhost = "http://10.0.2.2:50576/api/user/register";
-
-private class RegisterCallback implements HttpPostAsyncTask.Callback {
-    public void onPostExecute(HttpPostCallbackResult result)
-    {
-        // FIXME: notify user of success/failure, redirect to login, etc.
-        if(result.statusCode == 200)
-            BusinessName.setText("registered :^)");
-        else
-            BusinessName.setText("fail: " + Integer.toString(result.statusCode));
-    }
-}
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,7 +93,8 @@ private class RegisterCallback implements HttpPostAsyncTask.Callback {
                 postData.put("work_phone", work_phone);
                 postData.put("instructions", instructions);
 
-                HttpPostAsyncTask task = new HttpPostAsyncTask(postData, new RegisterCallback());
+                RegisterCallback callback = new RegisterCallback(RegisterBusinessActivity.this, BusinessRegister);
+                HttpPostAsyncTask task = new HttpPostAsyncTask(postData, callback);
                 task.execute(localhost);
                 Log.d("RegisBusinessActivity", "sent");
             }
