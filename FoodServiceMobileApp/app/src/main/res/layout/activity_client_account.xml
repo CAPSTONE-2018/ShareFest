@@ -104,7 +104,7 @@
         android:id="@+id/tvLabelClientPhone"
         android:layout_width="146dp"
         android:layout_height="40dp"
-        android:layout_marginBottom="80dp"
+        android:layout_marginBottom="56dp"
         android:layout_marginStart="32dp"
         android:text="Client Phone"
         android:textAlignment="viewStart"
@@ -116,7 +116,7 @@
         android:id="@+id/tvClientPhone"
         android:layout_width="163dp"
         android:layout_height="46dp"
-        android:layout_marginBottom="88dp"
+        android:layout_marginBottom="64dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:ems="10"
@@ -190,9 +190,10 @@
         android:textSize="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.509"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.04" />
 
     <TextView
         android:id="@+id/tvLabelClientFirstName"
@@ -260,5 +261,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.984" />
+        app:layout_constraintVertical_bias="1.0" />
 </android.support.constraint.ConstraintLayout>

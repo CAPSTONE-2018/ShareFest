@@ -27,6 +27,7 @@ private EditText BusinessEmail;
 private EditText BusinessPassword;
 private EditText BusinessZip;
 private EditText BusinessUsername;
+private EditText BusinessInstructions;
 private final String UserType = "business";
 
 private String username;
@@ -37,6 +38,7 @@ private String zip;
 private String user_type;
 private String name;
 private String work_phone;
+private String instructions;
 
 public String localhost = "http://10.0.2.2:50576/api/user/register";
 
@@ -66,6 +68,7 @@ private class RegisterCallback implements HttpPostAsyncTask.Callback {
         BusinessEmail = (EditText) findViewById(R.id.etBusinessEmail);
         BusinessPassword = (EditText) findViewById(R.id.etBusinessPassword);
         BusinessZip = (EditText) findViewById(R.id.etBusinessZip);
+        BusinessInstructions = (EditText) findViewById(R.id.etBusinessInstructions);
 
 
         BusinessLogin.setOnClickListener(new View.OnClickListener() {
@@ -92,6 +95,7 @@ private class RegisterCallback implements HttpPostAsyncTask.Callback {
                 user_type = UserType;
                 name = BusinessName.getText().toString();
                 work_phone = BusinessPhone.getText().toString();
+                instructions = BusinessInstructions.getText().toString();
 
                 Map<String, String> postData = new HashMap<>();
                 postData.put("username", username);
@@ -102,6 +106,7 @@ private class RegisterCallback implements HttpPostAsyncTask.Callback {
                 postData.put("user_type", user_type);
                 postData.put("name", name);
                 postData.put("work_phone", work_phone);
+                postData.put("instructions", instructions);
 
                 HttpPostAsyncTask task = new HttpPostAsyncTask(postData, new RegisterCallback());
                 task.execute(localhost);

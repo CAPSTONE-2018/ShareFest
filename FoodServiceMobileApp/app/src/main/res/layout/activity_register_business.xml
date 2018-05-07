@@ -7,6 +7,20 @@
     android:layout_height="match_parent"
     tools:context="com.example.jaren.foodservice_mobileapp.RegisterBusinessActivity">
 
+    <EditText
+        android:id="@+id/etBusinessInstructions"
+        android:layout_width="163dp"
+        android:layout_height="46dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/btnBusinessRegister"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/tvBusinessInstructions" />
+
     <TextView
         android:id="@+id/tvBusinessUsername"
         android:layout_width="146dp"
@@ -84,6 +98,18 @@
         android:text="Business Phone"
         android:textAlignment="viewStart"
         android:textSize="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/tvBusinessInstructions"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/tvBusinessInstructions"
+        android:layout_width="146dp"
+        android:layout_height="46dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="32dp"
+        android:text="Instructions"
+        android:textAlignment="viewStart"
+        android:textSize="20dp"
         app:layout_constraintBottom_toTopOf="@+id/btnLogin"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -91,14 +117,14 @@
         android:id="@+id/etBusinessPhone"
         android:layout_width="163dp"
         android:layout_height="46dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="16dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:ems="10"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/btnBusinessRegister"
+        app:layout_constraintBottom_toTopOf="@+id/etBusinessInstructions"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.4"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/tvBusinessPhone" />
 
     <TextView
@@ -154,22 +180,6 @@
         app:layout_constraintStart_toEndOf="@+id/tvBusinessAddress" />
 
     <TextView
-        android:id="@+id/tvBusinessRegistration"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="Business Registration"
-        android:textSize="24dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <TextView
         android:id="@+id/tvBusinessName"
         android:layout_width="146dp"
         android:layout_height="46dp"
@@ -199,7 +209,7 @@
         android:id="@+id/btnBusinessRegister"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="4dp"
         android:layout_marginEnd="48dp"
         android:text="Register"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -223,7 +233,7 @@
         android:id="@+id/btnLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="4dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="44dp"
         android:text="Login"
