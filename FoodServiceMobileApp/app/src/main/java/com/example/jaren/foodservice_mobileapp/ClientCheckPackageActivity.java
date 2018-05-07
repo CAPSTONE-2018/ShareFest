@@ -15,8 +15,8 @@ public class ClientCheckPackageActivity extends AppCompatActivity {
     private ListView PackageList;
     private Button Menu;
 
-    private int[] SampleImages = {R.mipmap.ic_launcher};
-    private String[] SamplePackages = {"Marianos Package", "Jewel Osco Package", "Sam's Grocer Package", "Oriental Foods Package"};
+    private int[] SampleImages = {R.mipmap.ic_launcher, R.mipmap.ic_launcher, R.mipmap.ic_launcher, R.mipmap.ic_launcher };
+    private String[] SamplePackages = {"Marianos", "Jewel Osco", "Sam's Grocer", "Oriental Foods"};
     private String[] SampleDescriptions = {"Salads", "Breads", "Fruits", "Candy"};
 
     @Override

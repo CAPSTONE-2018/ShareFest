@@ -9,12 +9,13 @@
     <TextView
         android:id="@+id/tvClientLastName"
         android:layout_width="163dp"
-        android:layout_height="46dp"
-        android:layout_marginBottom="12dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="16dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:ems="10"
         android:inputType="textPersonName"
+        android:text="test"
         android:textSize="20dp"
         app:layout_constraintBottom_toTopOf="@+id/tvClientPhone"
         app:layout_constraintEnd_toEndOf="parent"
@@ -41,7 +42,7 @@
         android:layout_marginStart="32dp"
         android:text="Username"
         android:textSize="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/tvLabelClientPassword"
+        app:layout_constraintBottom_toTopOf="@+id/tvLabelClientEmail"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />
@@ -49,32 +50,21 @@
     <TextView
         android:id="@+id/tvClientUsername"
         android:layout_width="163dp"
-        android:layout_height="45dp"
-        android:layout_marginBottom="8dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="16dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="32dp"
         android:ems="10"
         android:inputType="textPersonName"
+        android:text="test"
         android:textSize="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/tvClientPassword"
+        app:layout_constraintBottom_toTopOf="@+id/tvClientEmail"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.333"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/tvLabelClientUsername"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.9" />
-
-    <TextView
-        android:id="@+id/tvLabelClientPassword"
-        android:layout_width="146dp"
-        android:layout_height="40dp"
-        android:layout_marginBottom="16dp"
-        android:layout_marginStart="32dp"
-        android:text="Password"
-        android:textAlignment="viewStart"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/tvLabelClientEmail"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/tvLabelClientEmail"
@@ -91,23 +81,24 @@
     <TextView
         android:id="@+id/tvClientEmail"
         android:layout_width="163dp"
-        android:layout_height="46dp"
-        android:layout_marginBottom="8dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="16dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:ems="10"
         android:inputType="textPersonName"
+        android:text="test"
         android:textSize="20dp"
         app:layout_constraintBottom_toTopOf="@+id/tvClientAddress"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.428"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/tvLabelClientEmail" />
 
     <TextView
         android:id="@+id/tvLabelClientPhone"
         android:layout_width="146dp"
         android:layout_height="40dp"
-        android:layout_marginBottom="56dp"
+        android:layout_marginBottom="96dp"
         android:layout_marginStart="32dp"
         android:text="Client Phone"
         android:textAlignment="viewStart"
@@ -118,12 +109,13 @@
     <TextView
         android:id="@+id/tvClientPhone"
         android:layout_width="163dp"
-        android:layout_height="46dp"
-        android:layout_marginBottom="52dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="96dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:ems="10"
         android:inputType="textPersonName"
+        android:text="test"
         android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -145,16 +137,17 @@
     <TextView
         android:id="@+id/tvClientZip"
         android:layout_width="163dp"
-        android:layout_height="46dp"
-        android:layout_marginBottom="8dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="16dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:ems="10"
         android:inputType="textPersonName"
+        android:text="test"
         android:textSize="20dp"
         app:layout_constraintBottom_toTopOf="@+id/tvClientFirstName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.428"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/tvLabelClientZip" />
 
     <TextView
@@ -172,12 +165,13 @@
     <TextView
         android:id="@+id/tvClientAddress"
         android:layout_width="163dp"
-        android:layout_height="46dp"
-        android:layout_marginBottom="12dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="16dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:ems="10"
         android:inputType="textPersonName"
+        android:text="test"
         android:textSize="20dp"
         app:layout_constraintBottom_toTopOf="@+id/tvClientZip"
         app:layout_constraintEnd_toEndOf="parent"
@@ -216,12 +210,13 @@
     <TextView
         android:id="@+id/tvClientFirstName"
         android:layout_width="163dp"
-        android:layout_height="46dp"
-        android:layout_marginBottom="8dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="16dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:ems="10"
         android:inputType="textPersonName"
+        android:text="test"
         android:textSize="20dp"
         app:layout_constraintBottom_toTopOf="@+id/tvClientLastName"
         app:layout_constraintEnd_toEndOf="parent"
@@ -241,21 +236,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_begin="20dp" />
-
-    <TextView
-        android:id="@+id/tvClientPassword"
-        android:layout_width="163dp"
-        android:layout_height="46dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:ems="10"
-        android:inputType="textVisiblePassword"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/tvClientEmail"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/tvLabelClientPassword" />
 
     <Button
         android:id="@+id/btnMenu"
