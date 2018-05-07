@@ -101,7 +101,7 @@ private class RegisterCallback implements HttpPostAsyncTask.Callback {
                 postData.put("zip", zip);
                 postData.put("user_type", user_type);
                 postData.put("name", name);
-                postData.put("work_phone", name);
+                postData.put("work_phone", work_phone);
 
                 HttpPostAsyncTask task = new HttpPostAsyncTask(postData, new RegisterCallback());
                 task.execute(localhost);

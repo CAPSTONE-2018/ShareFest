@@ -1,16 +1,22 @@
 package com.example.jaren.foodservice_mobileapp;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 public class BusinessClaimablePackagesActivity extends AppCompatActivity {
 
     private ListView PackageList;
+    private Button Menu;
 
+    private int[] SampleImages = {R.mipmap.ic_launcher};
     private String[] SamplePackages = {"Marianos Package", "Jewel Osco Package", "Sam's Grocer Package", "Oriental Foods Package"};
     private String[] SampleDescriptions = {"Salads", "Breads", "Fruits", "Candy"};
 
@@ -19,7 +25,19 @@ public class BusinessClaimablePackagesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_business_claimable_packages);
 
+        Menu = (Button) findViewById(R.id.btnMenu);
         PackageList = (ListView)findViewById(R.id.lvPackageList);
+
+        Menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(BusinessClaimablePackagesActivity.this, BusinessMenuActivity.class);
+                startActivity(i);
+            }
+        });
+
+        CustomAdapter ca = new CustomAdapter();
+        PackageList.setAdapter(ca);
     }
 
     class CustomAdapter extends BaseAdapter{
@@ -40,7 +58,18 @@ public class BusinessClaimablePackagesActivity extends AppCompatActivity {
 
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
-            return null;
+            view = getLayoutInflater().inflate(R.layout.listviewlayout, null);
+
+            ImageView imageView = (ImageView)view.findViewById(R.id.imageView);
+            TextView LVName = (TextView)view.findViewById(R.id.tvLVName);
+            TextView LVDescription = (TextView)view.findViewById(R.id.tvLVDescription);
+
+            // Sample Data
+            imageView.setImageResource(SampleImages[i]);
+            LVName.setText(SamplePackages[i]);
+            LVDescription.setText(SampleDescriptions[i]);
+
+            return view;
         }
     }
 }
