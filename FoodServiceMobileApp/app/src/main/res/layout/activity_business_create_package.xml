@@ -26,12 +26,12 @@
         android:layout_height="46dp"
         android:layout_marginBottom="24dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="8dp"
         android:text="Price"
         android:textSize="20dp"
         app:layout_constraintBottom_toTopOf="@+id/tvPackageExpiry"
         app:layout_constraintEnd_toStartOf="@+id/etPackagePrice"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.296"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
@@ -53,11 +53,14 @@
         android:layout_width="146dp"
         android:layout_height="46dp"
         android:layout_marginBottom="24dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         android:text="Description"
+        android:textSize="20dp"
         app:layout_constraintBottom_toTopOf="@+id/tvPackageQuantity"
-        app:layout_constraintStart_toStartOf="parent"
-        android:textSize="20dp" />
+        app:layout_constraintEnd_toStartOf="@+id/etPackageDescription"
+        app:layout_constraintHorizontal_bias="0.296"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/etPackagePrice"
@@ -98,13 +101,10 @@
         android:layout_height="46dp"
         android:layout_marginBottom="24dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginStart="24dp"
         android:ems="10"
         android:inputType="textMultiLine"
         app:layout_constraintBottom_toTopOf="@+id/etPackageQuantity"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/tvPackageDescription" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
         android:id="@+id/btnMenu"
