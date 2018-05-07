@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -55,13 +56,10 @@ public class BusinessAccountActivity extends AppCompatActivity {
         request.execute(urlUserInfo);
     }
 
-    private class InfoCallback implements HttpPostAsyncTask.Callback
-    {
+    private class InfoCallback implements HttpPostAsyncTask.Callback {
         public void onPostExecute(HttpPostCallbackResult result) {
-            if(result.statusCode == 200)
-            {
-                try
-                {
+            if(result.statusCode == 200) {
+                try {
                     JSONObject info = result.jsonObj;
 
                     BusinessUsername.setText(info.getString("username"));
@@ -70,19 +68,16 @@ public class BusinessAccountActivity extends AppCompatActivity {
                     BusinessPhone.setText(info.getString("work_phone"));
                     BusinessEmail.setText(info.getString("email"));
                     BusinessZip.setText(info.getString("zip"));
-                } catch (org.json.JSONException e)
-                {
+                } catch (org.json.JSONException e) {
                     Log.d("exception", e.getLocalizedMessage());
-                    // FIXME: implement invalid-response action
                 }
-            }
-            else if(result.statusCode == 401)
-            {
-                // FIXME: implement unauthorized action (bad/expired session token)
-            }
-            else if(result. statusCode == 403)
-            {
-                // FIXME: implement forbidden action (session is OK, user is not allowed)
+            } else {
+                // FIXME: Make user-friendly
+                Toast.makeText(
+                        getApplicationContext(),
+                        "Failed to get user info (" + Integer.toString(result.statusCode) + ")",
+                        Toast.LENGTH_LONG
+                ).show();
             }
         }
     }
