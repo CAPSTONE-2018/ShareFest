@@ -64,6 +64,7 @@ namespace FoodServiceAPI.Controllers
 
         public class ClientInfo : UserInfo
         {
+            public int cid { get; set; }
 	        public string first_name { get; set; }
 	        public string last_name { get; set; }
 	        public string cell_phone { get; set; }
@@ -71,6 +72,7 @@ namespace FoodServiceAPI.Controllers
             public ClientInfo(Client client) : base(client.User)
             {
                 user_type = "client";
+                cid = client.cid;
                 first_name = client.first_name;
                 last_name = client.last_name;
                 cell_phone = client.cell_phone;

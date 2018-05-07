@@ -109,7 +109,7 @@ namespace FoodServiceAPI.Controllers
                     select new PackageResult.PackageInfo(p, business.name, business.User.address);
 
                 if(options.only_eligible)
-                    query.Where(p => p.received == null);
+                    query = query.Where(p => p.received == null);
 
                 result.packages = await query.ToListAsync();
             }

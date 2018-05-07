@@ -50,10 +50,6 @@ public class BusinessMenuActivity extends AppCompatActivity {
                         Intent BusinessClaimablePackagesIntent = new Intent(getApplicationContext(), BusinessClaimablePackagesActivity.class);
                         startActivity(BusinessClaimablePackagesIntent);
                         return true;
-                    case R.id.nav_businessmarkpackages:
-                        Intent BusinessMarkPackagesIntent = new Intent(getApplicationContext(), BusinessMarkPackagesActivity.class);
-                        startActivity(BusinessMarkPackagesIntent);
-                        return true;
                     case R.id.nav_logout:
                         Intent LogoutIntent = new Intent(getApplicationContext(), LoginActivity.class);
                         startActivity(LogoutIntent);
