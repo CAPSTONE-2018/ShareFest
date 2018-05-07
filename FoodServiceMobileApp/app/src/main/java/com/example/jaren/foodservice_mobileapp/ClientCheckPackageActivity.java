@@ -3,6 +3,7 @@ package com.example.jaren.foodservice_mobileapp;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -10,14 +11,20 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class ClientCheckPackageActivity extends AppCompatActivity {
     private ListView PackageList;
     private Button Menu;
 
-    private int[] SampleImages = {R.mipmap.ic_launcher, R.mipmap.ic_launcher, R.mipmap.ic_launcher, R.mipmap.ic_launcher };
-    private String[] SamplePackages = {"Marianos", "Jewel Osco", "Sam's Grocer", "Oriental Foods"};
-    private String[] SampleDescriptions = {"PID1 - Salads", "PID2 - Breads", "PID3 - Fruits", "PID4 - Candy"};
+    private String urlGetPackages = "http://10.0.2.2:50576/api/package/getpackages";
+    JSONArray packages; // FIXME: A Package class might be appropriate, but this works for now
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,14 +42,42 @@ public class ClientCheckPackageActivity extends AppCompatActivity {
             }
         });
 
-        CustomAdapter ca = new CustomAdapter();
-        PackageList.setAdapter(ca);
+        Map<String, String> params = new HashMap<>();
+        params.put("only_eligible", "true");
+
+        String token = getSharedPreferences("food_service_session", MODE_PRIVATE).
+                getString("token", "");
+
+        HttpPostAsyncTask request = new HttpPostAsyncTask(params, new GetPackagesCallback(), token);
+        request.execute(urlGetPackages);
+    }
+
+    private class GetPackagesCallback implements HttpPostAsyncTask.Callback {
+        public void onPostExecute(HttpPostCallbackResult result) {
+            if(result.statusCode == 200) {
+                try {
+                    packages = result.jsonObj.getJSONArray("packages");
+                    CustomAdapter ca = new CustomAdapter();
+                    PackageList.setAdapter(ca);
+                    return;
+                } catch(org.json.JSONException e) {
+                    Log.d("exception", e.getLocalizedMessage());
+                }
+            }
+
+            // FIXME: Make user-friendly
+            Toast.makeText(
+                    getApplicationContext(),
+                    "Failed to get packages (" + Integer.toString(result.statusCode) + ")",
+                    Toast.LENGTH_LONG
+            ).show();
+        }
     }
 
     class CustomAdapter extends BaseAdapter {
         @Override
         public int getCount() {
-            return SamplePackages.length;
+            return packages.length();
         }
 
         @Override
@@ -63,10 +98,19 @@ public class ClientCheckPackageActivity extends AppCompatActivity {
             TextView LVName = (TextView)view.findViewById(R.id.tvLVName);
             TextView LVDescription = (TextView)view.findViewById(R.id.tvLVDescription);
 
-            // Sample Data
-            imageView.setImageResource(SampleImages[i]);
-            LVName.setText(SamplePackages[i]);
-            LVDescription.setText(SampleDescriptions[i]);
+            imageView.setImageResource(R.mipmap.ic_launcher);
+
+            try {
+                JSONObject pck = packages.getJSONObject(i);
+
+                String title = pck.getString("pid") + " - " + pck.getString("name");
+                String sub = pck.getString("business_name") + " - " + pck.getString("business_address");
+
+                LVName.setText(title);
+                LVDescription.setText(sub);
+            } catch (org.json.JSONException e) {
+                Log.d("exception", e.getLocalizedMessage());
+            }
 
             return view;
         }
