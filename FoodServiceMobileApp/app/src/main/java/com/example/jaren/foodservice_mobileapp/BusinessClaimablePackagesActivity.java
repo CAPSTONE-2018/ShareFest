@@ -60,12 +60,10 @@ public class BusinessClaimablePackagesActivity extends AppCompatActivity {
         public View getView(int i, View view, ViewGroup viewGroup) {
             view = getLayoutInflater().inflate(R.layout.listviewlayout, null);
 
-            ImageView imageView = (ImageView)view.findViewById(R.id.imageView);
             TextView LVName = (TextView)view.findViewById(R.id.tvLVName);
             TextView LVDescription = (TextView)view.findViewById(R.id.tvLVDescription);
 
             // Sample Data
-            imageView.setImageResource(SampleImages[i]);
             LVName.setText(SamplePackages[i]);
             LVDescription.setText(SampleDescriptions[i]);
 

@@ -18,13 +18,38 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ClientCheckPackageActivity extends AppCompatActivity {
     private ListView PackageList;
     private Button Menu;
 
     private String urlGetPackages = "http://10.0.2.2:50576/api/package/getpackages";
-    JSONArray packages; // FIXME: A Package class might be appropriate, but this works for now
+    private String urlClaimPackage = "http://10.0.2.2:50576/api/package/claim";
+    private String sessionToken;
+
+    List<Package> packages;
+
+    class Package {
+        int pid;
+        String name, businessName, businessAddress;
+        boolean claimed;
+        boolean modified;
+
+        public Package(JSONObject jsonPkg) {
+            try {
+                pid = jsonPkg.getInt("pid");
+                name = jsonPkg.getString("name");
+                businessName = jsonPkg.getString("business_name");
+                businessAddress = jsonPkg.getString("business_address");
+                claimed = !jsonPkg.isNull("claimed");
+                modified = false;
+            } catch (org.json.JSONException e) {
+                Log.d("exception", e.getLocalizedMessage());
+            }
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,10 +70,10 @@ public class ClientCheckPackageActivity extends AppCompatActivity {
         Map<String, String> params = new HashMap<>();
         params.put("only_eligible", "true");
 
-        String token = getSharedPreferences("food_service_session", MODE_PRIVATE).
+        sessionToken = getSharedPreferences("food_service_session", MODE_PRIVATE).
                 getString("token", "");
 
-        HttpPostAsyncTask request = new HttpPostAsyncTask(params, new GetPackagesCallback(), token);
+        HttpPostAsyncTask request = new HttpPostAsyncTask(params, new GetPackagesCallback(), sessionToken);
         request.execute(urlGetPackages);
     }
 
@@ -56,7 +81,13 @@ public class ClientCheckPackageActivity extends AppCompatActivity {
         public void onPostExecute(HttpPostCallbackResult result) {
             if(result.statusCode == 200) {
                 try {
-                    packages = result.jsonObj.getJSONArray("packages");
+                    JSONArray jsonPkgs = result.jsonObj.getJSONArray("packages");
+                    packages = new ArrayList<>(jsonPkgs.length());
+
+                    for(int i = 0; i < jsonPkgs.length(); i++) {
+                        packages.add(new Package(jsonPkgs.getJSONObject(i)));
+                    }
+
                     CustomAdapter ca = new CustomAdapter();
                     PackageList.setAdapter(ca);
                     return;
@@ -77,7 +108,7 @@ public class ClientCheckPackageActivity extends AppCompatActivity {
     class CustomAdapter extends BaseAdapter {
         @Override
         public int getCount() {
-            return packages.length();
+            return packages.size();
         }
 
         @Override
@@ -92,25 +123,67 @@ public class ClientCheckPackageActivity extends AppCompatActivity {
 
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
-            view = getLayoutInflater().inflate(R.layout.listviewlayout, null);
+            if(view == null) {
+                view = getLayoutInflater().inflate(R.layout.listviewlayout, null);
+            }
 
-            ImageView imageView = (ImageView)view.findViewById(R.id.imageView);
+            final Package pkg = packages.get(i);
+
             TextView LVName = (TextView)view.findViewById(R.id.tvLVName);
             TextView LVDescription = (TextView)view.findViewById(R.id.tvLVDescription);
 
-            imageView.setImageResource(R.mipmap.ic_launcher);
+            String title = Integer.toString(pkg.pid) + " - " + pkg.name;
+            String sub = pkg.businessName + " - " + pkg.businessAddress;
+            LVName.setText(title);
+            LVDescription.setText(sub);
 
-            try {
-                JSONObject pck = packages.getJSONObject(i);
+            final Button btnClaim = (Button)view.findViewById(R.id.btnLVClaim);
+            btnClaim.setText(pkg.claimed ? "Unclaim" : "Claim");
 
-                String title = pck.getString("pid") + " - " + pck.getString("name");
-                String sub = pck.getString("business_name") + " - " + pck.getString("business_address");
+            /* FIXME: The client is currently prevented from unclaiming and trying to claim the
+            package again. Since renotification is gradual right now, an immediate attempt to
+            reclaim will fail because they don't have a notice anymore. */
+            btnClaim.setEnabled(!pkg.modified || pkg.claimed);
 
-                LVName.setText(title);
-                LVDescription.setText(sub);
-            } catch (org.json.JSONException e) {
-                Log.d("exception", e.getLocalizedMessage());
-            }
+            // FIXME: This is a hacked-together mess :^)
+            btnClaim.setOnClickListener(new View.OnClickListener() {
+                Button btn = btnClaim;
+
+                public void onClick(View view) {
+                    btn.setEnabled(false);
+
+                    Map<String, String> params = new HashMap<>();
+                    params.put("pid", Integer.toString(pkg.pid));
+                    params.put("claim", Boolean.toString(!pkg.claimed));
+
+                    HttpPostAsyncTask request = new HttpPostAsyncTask(params, new ClaimCallback(), sessionToken);
+                    request.execute(urlClaimPackage);
+                }
+
+                class ClaimCallback implements HttpPostAsyncTask.Callback {
+                    public void onPostExecute(HttpPostCallbackResult result) {
+                        String msg;
+
+                        if(result.statusCode == 200) {
+                            pkg.modified = true;
+
+                            if(pkg.claimed) {
+                                msg = "Unclaimed package.";
+                                pkg.claimed = false;
+                            } else {
+                                msg = "Claimed package.";
+                                pkg.claimed = true;
+                            }
+                        } else {
+                            // FIXME: Make user-friendly
+                            msg = "Failed to " + (pkg.claimed ? "unclaim" : "claim") + " package (" + Integer.toString(result.statusCode) + ")";
+                        }
+
+                        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
+                        notifyDataSetChanged(); // getView is called again for each displayed list item
+                    }
+                }
+            });
 
             return view;
         }

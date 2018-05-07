@@ -47,10 +47,6 @@ public class ClientMenuActivity extends AppCompatActivity {
                         Intent ClientCheckPackageIntent = new Intent(getApplicationContext(), ClientCheckPackageActivity.class);
                         startActivity(ClientCheckPackageIntent);
                         return true;
-                    case R.id.nav_claimpacakage:
-                        Intent ClientClaimPackageIntent = new Intent(getApplicationContext(), ClientClaimPackageActivity.class);
-                        startActivity(ClientClaimPackageIntent);
-                        return true;
                     case R.id.nav_logout:
                         Intent LogoutIntent = new Intent(getApplicationContext(), LoginActivity.class);
                         startActivity(LogoutIntent);
