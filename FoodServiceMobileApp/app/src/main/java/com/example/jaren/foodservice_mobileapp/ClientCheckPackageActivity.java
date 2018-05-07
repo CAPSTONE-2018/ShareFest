@@ -17,7 +17,7 @@ public class ClientCheckPackageActivity extends AppCompatActivity {
 
     private int[] SampleImages = {R.mipmap.ic_launcher, R.mipmap.ic_launcher, R.mipmap.ic_launcher, R.mipmap.ic_launcher };
     private String[] SamplePackages = {"Marianos", "Jewel Osco", "Sam's Grocer", "Oriental Foods"};
-    private String[] SampleDescriptions = {"Salads", "Breads", "Fruits", "Candy"};
+    private String[] SampleDescriptions = {"PID1 - Salads", "PID2 - Breads", "PID3 - Fruits", "PID4 - Candy"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
