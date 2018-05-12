@@ -1,0 +1,579 @@
+{
+	"info": {
+		"_postman_id": "5ffb3b66-ad45-4cdd-8965-c36da7cd8193",
+		"name": "SMS Food Service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "api/user/register (client)",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\": \"postclient\",\n\t\"password\": \"letmein\",\n\t\"email\": \"client@gmail.com\",\n\t\"address\": \"999 Client Dr.\",\n\t\"zip\": \"12345\",\n\t\"user_type\": \"client\",\n\t\"first_name\": \"Jenny\",\n\t\"last_name\": \"Client\",\n\t\"cell_phone\": \"1238675309\",\n\t\"paying\": \"true\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:50576/api/user/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "50576",
+					"path": [
+						"api",
+						"user",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api/user/register (business)",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\": \"postbusiness\",\n\t\"password\": \"letmein\",\n\t\"email\": \"business@business.com\",\n\t\"address\": \"1000 Business Av.\",\n\t\"zip\": \"54321\",\n\t\"user_type\": \"business\",\n\t\"name\": \"Post Business\",\n\t\"work_phone\": \"8004482274\",\n\t\"instructions\": \"Go through the back entrance.\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:50576/api/user/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "50576",
+					"path": [
+						"api",
+						"user",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api/user/login",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\": \"testbusy\",\n\t\"password\": \"dontsteal\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:50576/api/user/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "50576",
+					"path": [
+						"api",
+						"user",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api/user/logout",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:50576/api/user/logout",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "50576",
+					"path": [
+						"api",
+						"user",
+						"logout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api/user/getinfo",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:50576/api/user/getinfo",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "50576",
+					"path": [
+						"api",
+						"user",
+						"getinfo"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api/user/getusertype",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {},
+				"url": {
+					"raw": "http://localhost:50576/api/user/getusertype",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "50576",
+					"path": [
+						"api",
+						"user",
+						"getusertype"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api/user/logoutall",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\": \"testbusy\",\n\t\"password\": \"dontsteal\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:50576/api/user/logoutall",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "50576",
+					"path": [
+						"api",
+						"user",
+						"logoutall"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api/user/setinfo",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\": \"postclient\",\n\t\"password\": \"letmein\",\n\t\"new_username\": \"superclient\",\n\t\"email\": \"new@email.com\",\n\t\"address\": \"New St.\",\n\t\"zip\": \"11111\",\n\t\"first_name\": \"Super\",\n\t\"last_name\": \"Client\",\n\t\"cell_phone\": \"5550005555\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:50576/api/user/setinfo",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "50576",
+					"path": [
+						"api",
+						"user",
+						"setinfo"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api/user/setpassword",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\": \"postclient\",\n\t\"password\": \"letmein\",\n\t\"new_password\": \"p1zza\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:50576/api/user/setpassword",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "50576",
+					"path": [
+						"api",
+						"user",
+						"setpassword"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api/user/delete",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\": \"postclient\",\n\t\"password\": \"letmein\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:50576/api/user/delete",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "50576",
+					"path": [
+						"api",
+						"user",
+						"delete"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api/business/getbusiness",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"bid\": 1\n}"
+				},
+				"url": {
+					"raw": "http://localhost:50576/api/business/getbusiness",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "50576",
+					"path": [
+						"api",
+						"business",
+						"getbusiness"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api/package/getpackages",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"only_eligible\": true\n}"
+				},
+				"url": {
+					"raw": "http://localhost:50576/api/package/getpackages",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "50576",
+					"path": [
+						"api",
+						"package",
+						"getpackages"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api/package/createpackage",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"Dates\",\n\t\"description\": \"Ya eat 'em\",\n\t\"quantity\": \"1 bowl\",\n\t\"price\": 0.0,\n\t\"expires\": \"2019-11-01 12:00:00PM\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:50576/api/package/createpackage",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "50576",
+					"path": [
+						"api",
+						"package",
+						"createpackage"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api/package/deletepackage",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"pid\": 2\n}"
+				},
+				"url": {
+					"raw": "http://localhost:50576/api/package/deletepackage",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "50576",
+					"path": [
+						"api",
+						"package",
+						"deletepackage"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api/package/claim",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"pid\": 2,\n\t\"claim\": true\n}"
+				},
+				"url": {
+					"raw": "http://localhost:50576/api/package/claim",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "50576",
+					"path": [
+						"api",
+						"package",
+						"claim"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "api/package/markreceived",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"pid\": 2\n}"
+				},
+				"url": {
+					"raw": "http://localhost:50576/api/package/markreceived",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "50576",
+					"path": [
+						"api",
+						"package",
+						"markreceived"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
