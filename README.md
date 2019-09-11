@@ -1,5 +1,5 @@
-# SMS-Food-Service
-Repository for the SMS-Food-Service Project
+# Food-Service
+Repository for the Food-Service Project
 
 # Project goal
 The goal of this capstone project is to make consumers aware, through text messages or app notifications, of the free or largely discounted availability of healthy foods, particularly relating to fresh produce and perishable goods. 
@@ -12,5 +12,7 @@ This project is targeted to people who are looking to integrate healthy food opt
 * [Progress Chart](https://docs.google.com/spreadsheets/d/1ElMoUn21Vu91KZra6kDLYL1J5zfb33X6g-IyDMAXL1s)
 * [Development Environment](https://docs.google.com/document/d/13wVTaLkUXlR6JtAX7iofpPuwNh5wn-SZiHWvyy4wcmc)
 * [Web API Reference](https://docs.google.com/document/d/1XfdUQ2KnN_tXjKfqjd4sBAsa_fK8JCdopWqoWZZpsdg)
+
+# Fall 2019 Capstone
 
 Copies and additional documentation are in the Documentation directory.
