@@ -1,15 +1,10 @@
-﻿################################################################################
-# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
-################################################################################
-
-/SMSfoodServiceWebClient/SMSfoodServiceWebClient/Content/_bootswatch.scss
-/SMSfoodServiceWebClient/SMSfoodServiceWebClient/Content/_variable.scss
-/SMSfoodServiceWebClient/SMSfoodServiceWebClient/Views/RegisterViewModels/Create.cshtml
-/SMSfoodServiceWebClient/SMSfoodServiceWebClient/App_Data/aspnet-SMSfoodServiceWebClient-20180312044250.mdf
-/SMSfoodServiceWebClient/SMSfoodServiceWebClient/Views/RegisterViewModels/Details.cshtml
-/SMSfoodServiceWebClient/SMSfoodServiceWebClient/Views/RegisterViewModels/Index.cshtml
-/SMSfoodServiceWebClient/SMSfoodServiceWebClient/Views/RegisterViewModels/Edit.cshtml
-/SMSfoodServiceWebClient/SMSfoodServiceWebClient/Views/RegisterViewModels/Delete.cshtml
-/SMSfoodServiceWebClient/SMSfoodServiceWebClient/Controllers/RegisterViewModelsController.cs
-/SMSfoodServiceWebClient/SMSfoodServiceWebClient/App_Data/aspnet-SMSfoodServiceWebClient-20180312044250_log.ldf
-/.gitattributes
+# ignore all .env:
+*.env
+.env
+# Django stuff:
+*.log
+local_settings.py
+#db.sqlite3
+db.sqlite3-journal
+#vscode
+*.code-workspace

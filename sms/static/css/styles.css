@@ -1,0 +1,42 @@
+/* ------   ----- */
+body { background:#042804; }
+/* ------Titles/Headers----- */
+
+h1, h2 {
+  color:#bfcc80;
+}
+/* ------Containers----- */
+.container-fluid {
+  color:white;
+}
+.sidebar-nav {
+    margin-top: 20px;
+    padding: 0;
+    /* background:#045625; */
+    text-align: center;
+}
+/* ------List Elements----- */
+.fa {
+  margin: 0 auto;
+  display: block;
+}
+ul li {
+  margin-bottom:20px;
+}
+ul > a {
+  color:white;
+  position:relative;
+}
+[class = "link"]:hover,ul > a:hover{
+  background-color:#6c757d;
+  cursor:pointer;
+  color:white;
+}
+ul a:hover {
+  text-decoration:none;
+  color:inherit;
+}
+.add-btn:hover {
+  color:red;
+  cursor:pointer;
+}

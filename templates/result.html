@@ -1,0 +1,10 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <h1>Your SMS service</h1>
+    <h2>Twilio integrated sms boxes</h2>
+    <p>Please compose a message</p>
+    <p>Recipient {{ recipient }} was sent message {{ message_body }}</p>
+    <p>Twilio SID: {{ message_sid }}</p>
+    
+{% endblock %}

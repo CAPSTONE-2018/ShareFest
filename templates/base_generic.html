@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  {% block title %}<title>Will CountySharefest SMS Service</title>{% endblock %}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+  <!-- Add additional CSS in static file -->
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-2">
+      {% block sidebar %}
+        <ul class="sidebar-nav" style="list-style:none">
+          {% if user.is_anonymous %}
+          <li>Please sign in</li>
+          {% endif %}
+         {% if user.is_authenticated %}
+           <li>User: {{ user.get_username }}</li>
+           <a href="{% url 'compose' %}"><i class="fa fa-envelope w3-xxlarge"></i><li class="link">Compose</li></a>
+           <a href="{% url 'upload' %}"><i class="fa fa-address-card w3-xxlarge"></i><li class="link">Upload Contacts</li></a>
+           <a href="{% url 'sign-up' %}"><i class="fa fa-group w3-xxlarge"></i><li>Create Users</li></a>
+           <a href="{% url 'logout'%}?next={{request.path}}"><i class="fa fa-sign-out w3-xxlarge"></i><li class="link">Logout</li></a>
+         {% else %}
+           <a href="{% url 'login'%}?next={{request.path}}"><li class="link">Login</li></a>
+         {% endif %}
+        </ul>
+     {% endblock %}
+      </div>
+      <div class="col-sm-10 pr-sm-5">{% block content %}{% endblock %}</div>
+    </div>
+  </div>
+</body>
+</html>
